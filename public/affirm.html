@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nomads Digital — Growth you can see, measure, and trust.</title>
+<link rel="icon" type="image/png" href="/nomads-logo.png">
+<link rel="apple-touch-icon" href="/nomads-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   DESIGN TOKENS + DARK/LIGHT MODE
+   ============================================= */
+:root {
+  --bg:          #F5F2EC;
+  --bg2:         #EDEAE2;
+  --bg3:         #E4E0D6;
+  --surface:     #FFFFFF;
+  --obs:         #0E0E0E;
+  --text:        #111111;
+  --text2:       #4C4843;
+  --text3:       #9A958F;
+  --border:      rgba(14,14,14,0.1);
+  --border2:     rgba(14,14,14,0.18);
+  --gold:        #C09A58;
+  --gold2:       #D4B475;
+  --gold-glow:   rgba(192,154,88,0.15);
+  --nav-bg:      rgba(245,242,236,0.92);
+  --card-bg:     #FFFFFF;
+  --card-parch:  #EDE9E0;
+  --shadow:      0 2px 24px rgba(0,0,0,0.06);
+  --shadow-lg:   0 8px 48px rgba(0,0,0,0.1);
+  --font-display:'Playfair Display', Georgia, serif;
+  --font-body:   'Outfit', system-ui, sans-serif;
+  --ease:        cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="dark"] {
+  --bg:          #0C0C0C;
+  --bg2:         #141414;
+  --bg3:         #1C1C1C;
+  --surface:     #181818;
+  --obs:         #F0EDE6;
+  --text:        #F0EDE6;
+  --text2:       #A09990;
+  --text3:       #5C5852;
+  --border:      rgba(240,237,230,0.1);
+  --border2:     rgba(240,237,230,0.18);
+  --nav-bg:      rgba(12,12,12,0.92);
+  --card-bg:     #181818;
+  --card-parch:  #1E1C18;
+  --shadow:      0 2px 24px rgba(0,0,0,0.4);
+  --shadow-lg:   0 8px 48px rgba(0,0,0,0.5);
+}
+
+/* =============================================
+   RESET
+   ============================================= */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+  font-weight:300;
+  overflow-x:hidden;
+  transition:background .35s var(--ease), color .35s var(--ease);
+}
+img{display:block;max-width:100%}
+button{font-family:var(--font-body);cursor:pointer;border:none;background:none}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font-family:var(--font-body)}
+
+/* =============================================
+   LAYOUT
+   ============================================= */
+.wrap{max-width:1220px;margin:0 auto;padding:0 48px}
+.sec{padding:110px 0}
+.sec-sm{padding:72px 0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+/* =============================================
+   TYPOGRAPHY
+   ============================================= */
+.d-hero{
+  font-family:var(--font-display);
+  font-size:clamp(52px,7.5vw,104px);
+  font-weight:400;
+  line-height:1.01;
+  letter-spacing:-0.025em;
+}
+.d-xl{font-family:var(--font-display);font-size:clamp(40px,5.5vw,76px);font-weight:400;line-height:1.06;letter-spacing:-0.02em}
+.d-lg{font-family:var(--font-display);font-size:clamp(32px,4vw,56px);font-weight:400;line-height:1.1;letter-spacing:-0.015em}
+.d-md{font-family:var(--font-display);font-size:clamp(24px,3vw,40px);font-weight:400;line-height:1.15}
+.d-sm{font-family:var(--font-display);font-size:clamp(20px,2.2vw,30px);font-weight:400;line-height:1.2}
+.two-line-heading{display:block;max-width:max-content!important}
+.two-line-heading span{display:block;white-space:nowrap}
+.lbl{font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold)}
+.body-lg{font-size:18px;line-height:1.82;font-weight:300;color:var(--text2)}
+.body-md{font-size:15px;line-height:1.78;font-weight:300;color:var(--text2)}
+.body-sm{font-size:13px;line-height:1.72;font-weight:300;color:var(--text2)}
+em{font-style:italic;color:var(--gold)}
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:13px;font-weight:500;letter-spacing:0.04em;
+  padding:14px 30px;border-radius:2px;
+  transition:all .25s var(--ease);white-space:nowrap;cursor:pointer;
+}
+.btn-dark{background:var(--text);color:var(--bg);border:1.5px solid var(--text)}
+.btn-dark:hover{opacity:.82}
+.btn-outline{background:transparent;color:var(--text);border:1.5px solid var(--border2)}
+.btn-outline:hover{background:var(--text);color:var(--bg);border-color:var(--text)}
+.btn-gold{background:var(--gold);color:#fff;border:1.5px solid var(--gold)}
+.btn-gold:hover{background:var(--gold2);border-color:var(--gold2)}
+.btn-ghost-w{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.25)}
+.btn-ghost-w:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.5)}
+.btn svg,.btn-arrow::after{transition:transform .22s var(--ease)}
+.btn-arrow::after{content:'→';margin-left:2px}
+.btn:hover .btn-arrow::after,.btn-arrow:hover::after{transform:translateX(4px)}
+
+/* =============================================
+   BADGES
+   ============================================= */
+.tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:4px 11px;border-radius:2px}
+.tag-gold{background:var(--gold-glow);color:var(--gold);border:1px solid rgba(192,154,88,0.3)}
+.tag-muted{background:var(--bg2);color:var(--text3);border:1px solid var(--border)}
+
+/* =============================================
+   NAVIGATION
+   ============================================= */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:62px;display:flex;align-items:center;
+  justify-content:space-between;
+  padding:0 48px;
+  background:var(--nav-bg);
+  backdrop-filter:blur(20px) saturate(1.5);
+  -webkit-backdrop-filter:blur(20px) saturate(1.5);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s, background .35s var(--ease);
+}
+.nav.scrolled{border-bottom-color:var(--border)}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  cursor:pointer;
+  font-family:var(--font-display);
+  font-size:22px;font-weight:400;letter-spacing:-0.01em;
+  color:var(--text);
+  transition:color .35s;
+}
+.nav-logo img{height:36px;width:36px;border-radius:50%;object-fit:cover;display:block}
+.nav-logo em{font-style:normal;color:var(--gold)}
+.nav-center{display:flex;align-items:center;gap:36px}
+.nav-link{
+  font-size:13px;font-weight:400;color:var(--text2);
+  cursor:pointer;border:none;background:none;
+  font-family:var(--font-body);
+  transition:color .2s;
+  letter-spacing:0.01em;
+}
+.nav-link:hover,.nav-link.on{color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:14px}
+/* Day/Night toggle */
+.theme-toggle{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border2);
+  color:var(--text2);transition:all .25s var(--ease);
+  cursor:pointer;background:transparent;font-size:15px;
+}
+.theme-toggle:hover{background:var(--bg2);color:var(--text);border-color:var(--border2)}
+/* Mobile */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:1px solid var(--border);border-radius:4px}
+.hamburger span{display:block;width:20px;height:1px;background:var(--text);transition:all .25s}
+.mob-nav{display:none;position:fixed;inset:0;z-index:999;background:var(--bg);padding:80px 40px 40px;flex-direction:column;gap:28px;border-right:1px solid var(--border)}
+.mob-nav.open{display:flex}
+.mob-link{font-family:var(--font-display);font-size:36px;font-weight:400;color:var(--text);cursor:pointer;transition:color .2s}
+.mob-link:hover{color:var(--gold)}
+
+/* PAGE SYSTEM */
+.page{display:none}
+.page.on{display:block}
+body{padding-top:62px}
+
+/* =============================================
+   HERO — COMPLETELY REDESIGNED
+   ============================================= */
+.hero{
+  min-height:calc(100vh - 62px);
+  display:grid;
+  grid-template-columns:1fr;
+  position:relative;
+  overflow:hidden;
+}
+.hero-inner{
+  display:flex;flex-direction:column;
+  justify-content:center;
+  padding:80px 48px 60px;
+  max-width:1220px;margin:0 auto;width:100%;
+  position:relative;z-index:2;
+}
+/* Background elements */
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-circle{
+  position:absolute;right:-10%;top:-20%;
+  width:700px;height:700px;border-radius:50%;
+  border:1px solid var(--border);
+  opacity:.5;
+  transition:all .35s var(--ease);
+}
+.hero-circle2{
+  position:absolute;right:8%;top:10%;
+  width:420px;height:420px;border-radius:50%;
+  border:1px solid var(--gold-glow);
+  opacity:.8;
+}
+.hero-line-v{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--border);opacity:.6}
+.hero-dot{position:absolute;right:22%;top:38%;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.hero-grain{
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.018;pointer-events:none;
+}
+
+/* Hero label row */
+.hero-eyebrow{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:32px;
+}
+.hero-eline{width:48px;height:1px;background:var(--gold)}
+.hero-mkts-row{display:flex;align-items:center;gap:0}
+.hmkt{
+  font-size:11px;font-weight:500;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--text3);
+  padding:4px 14px;
+  border-right:1px solid var(--border);
+  transition:color .2s;
+}
+.hmkt:first-child{padding-left:0}
+.hmkt:last-child{border-right:none}
+
+/* Hero headline */
+.hero-headline{
+  margin-bottom:32px;
+  position:relative;
+}
+.hero-headline .line1{display:block}
+.hero-headline .line2{display:block;margin-left:clamp(40px,6vw,110px)}
+.hero-headline .line3{
+  display:flex;align-items:center;gap:20px;
+}
+.hero-headline .line3-text{display:block}
+/* Gold pill accent */
+.hero-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 16px;border-radius:100px;
+  background:var(--gold-glow);
+  border:1px solid rgba(192,154,88,0.3);
+  font-size:12px;font-weight:500;letter-spacing:0.04em;
+  color:var(--gold);white-space:nowrap;
+  font-family:var(--font-body);
+  margin-top:12px;
+}
+.hero-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.4;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+
+/* Hero sub + ctas */
+.hero-sub-row{
+  display:grid;grid-template-columns:1fr auto;
+  align-items:end;gap:60px;
+  margin-top:44px;
+  padding-top:44px;
+  border-top:1px solid var(--border);
+}
+.hero-sub{max-width:440px}
+.hero-ctas{display:flex;flex-direction:column;gap:12px;align-items:flex-end}
+.hero-cta-note{font-size:12px;color:var(--text3);text-align:right;margin-top:4px}
+
+/* Hero scroll line */
+.hero-scroll{
+  position:absolute;left:48px;bottom:40px;
+  display:flex;align-items:center;gap:10px;
+  z-index:2;
+}
+.scroll-track{width:44px;height:1px;background:var(--border);position:relative;overflow:hidden}
+.scroll-track::after{
+  content:'';position:absolute;left:-100%;top:0;
+  width:100%;height:100%;background:var(--gold);
+  animation:scrollH 2.2s ease-in-out infinite;
+}
+@keyframes scrollH{0%{left:-100%}100%{left:100%}}
+.scroll-lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text3)}
+
+/* Stats floating card */
+.hero-stats{
+  position:absolute;right:48px;bottom:60px;
+  display:flex;gap:0;z-index:2;
+  border:1px solid var(--border);
+  border-radius:8px;overflow:hidden;
+  background:var(--card-bg);
+  box-shadow:var(--shadow);
+  transition:background .35s var(--ease),box-shadow .35s;
+}
+.hstat{padding:20px 28px;border-right:1px solid var(--border);text-align:center}
+.hstat:last-child{border-right:none}
+.hstat-n{font-family:var(--font-display);font-size:28px;font-weight:400;line-height:1;color:var(--text)}
+.hstat-l{font-size:11px;color:var(--text3);margin-top:4px;font-weight:400}
+
+/* =============================================
+   TICKER
+   ============================================= */
+.ticker-wrap{
+  overflow:hidden;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:14px 0;background:var(--bg2);
+  transition:background .35s;
+}
+.ticker-track{display:flex;animation:tickL 30s linear infinite;width:max-content}
+.ti{font-size:12px;color:var(--text3);padding:0 40px;white-space:nowrap;display:flex;align-items:center;gap:40px}
+.ti::after{content:'·';color:var(--gold)}
+@keyframes tickL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* =============================================
+   SECTION HEADERS
+   ============================================= */
+.sec-header{margin-bottom:56px}
+.sec-header .lbl{display:block;margin-bottom:14px}
+.sec-header-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
+.sec-header-row .lbl{display:block;margin-bottom:12px}
+
+/* =============================================
+   DIVIDER
+   ============================================= */
+.divider{height:1px;background:var(--border)}
+
+/* =============================================
+   CARDS
+   ============================================= */
+.card{
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:8px;padding:36px;
+  transition:border-color .22s, box-shadow .22s, background .35s;
+}
+.card:hover{border-color:var(--border2);box-shadow:var(--shadow)}
+.card-parch{background:var(--card-parch);border:1px solid var(--border);border-radius:8px;padding:36px;transition:background .35s}
+.card-dark-abs{background:var(--obs);color:var(--bg);border-radius:8px;padding:36px;border:1px solid var(--border2)}
+
+/* =============================================
+   CONTRAST SECTION
+   ============================================= */
+.contrast-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.cg-head{
+  font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text3);padding-bottom:16px;border-bottom:1px solid var(--border);
+  margin-bottom:0;
+}
+.cg-item{
+  padding:16px 0;border-bottom:1px solid var(--border);
+  font-size:14px;color:var(--text2);line-height:1.65;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.cg-item.aff{color:var(--text);font-weight:400}
+.cg-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:9px}
+.cg-x{width:16px;height:16px;flex-shrink:0;margin-top:2px;opacity:.3}
+
+/* =============================================
+   SERVICE CARDS
+   ============================================= */
+.svc-card{
+  border:1px solid var(--border);border-radius:8px;
+  padding:32px;background:var(--card-bg);
+  transition:all .25s var(--ease);cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.svc-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:0;background:var(--gold);
+  transition:width .3s var(--ease);
+  border-radius:8px 0 0 8px;
+}
+.svc-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--border2)}
+.svc-card:hover::before{width:3px}
+.svc-prob{font-size:12px;color:var(--text3);margin-bottom:14px;font-style:italic;line-height:1.55}
+.svc-name{font-family:var(--font-display);font-size:22px;font-weight:400;margin-bottom:10px;color:var(--text)}
+.svc-desc{font-size:13px;color:var(--text2);line-height:1.68;margin-bottom:18px}
+.svc-link{font-size:12px;font-weight:500;color:var(--gold);display:flex;align-items:center;gap:6px;transition:gap .2s}
+.svc-card:hover .svc-link{gap:10px}
+
+/* =============================================
+   CASE STUDY FEATURE
+   ============================================= */
+.cf{border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .35s}
+.cf-grid{display:grid;grid-template-columns:1fr 1fr}
+.cf-l{
+  padding:56px;background:var(--card-parch);
+  display:flex;flex-direction:column;justify-content:space-between;
+  transition:background .35s;
+}
+.cf-r{
+  background:#0C0C0C;padding:56px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  position:relative;overflow:hidden;
+}
+[data-theme="dark"] .cf-r{background:#0A0A0A}
+.cf-r::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(192,154,88,.08) 0%,transparent 60%);
+}
+.cf-metric{margin-bottom:28px;position:relative;z-index:1}
+.cf-metric:last-child{margin-bottom:0}
+.cf-num{font-family:var(--font-display);font-size:clamp(44px,5vw,68px);font-weight:400;color:#fff;line-height:1}
+.cf-lbl{font-size:12px;color:rgba(255,255,255,.42);margin-top:6px;letter-spacing:0.02em}
+
+/* =============================================
+   MARKET TABS
+   ============================================= */
+.mtabs{
+  display:flex;border-bottom:1px solid var(--border);
+  margin-bottom:44px;
+}
+.mtab{
+  padding:12px 24px;font-size:13px;font-weight:400;
+  color:var(--text3);background:none;border:none;
+  cursor:pointer;font-family:var(--font-body);
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;transition:all .2s;
+}
+.mtab.on,.mtab:hover{color:var(--text)}
+.mtab.on{border-bottom-color:var(--gold);color:var(--text);font-weight:500}
+.mpanel{display:none}
+.mpanel.on{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.mstats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mstat{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:20px;transition:background .35s}
+.mstat-n{font-family:var(--font-display);font-size:28px;font-weight:400;line-height:1;color:var(--text)}
+.mstat-l{font-size:11px;color:var(--text3);margin-top:5px}
+.mkt-lead{
+  margin-top:16px;background:var(--card-bg);
+  border:1px solid var(--border);border-radius:6px;padding:20px;
+  display:flex;gap:14px;align-items:center;
+  transition:background .35s;
+}
+.t-av{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--bg2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:14px;color:var(--text3);flex-shrink:0;
+}
+
+/* =============================================
+   METHODOLOGY
+   ============================================= */
+.method-grid{
+  display:grid;grid-template-columns:repeat(6,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:10px;overflow:hidden;
+  margin-top:48px;transition:background .35s;
+}
+.ms{background:var(--card-bg);padding:28px 20px;transition:background .35s}
+.ml{font-family:var(--font-display);font-size:44px;font-weight:400;color:var(--gold);line-height:1;margin-bottom:14px}
+.mn{font-size:13px;font-weight:500;margin-bottom:7px;color:var(--text)}
+.md{font-size:12px;color:var(--text2);line-height:1.65}
+
+/* =============================================
+   TESTIMONIALS
+   ============================================= */
+.testi{
+  padding:36px;border:1px solid var(--border);
+  border-radius:8px;background:var(--card-bg);
+  position:relative;transition:all .25s var(--ease), background .35s;
+}
+.testi::before{
+  content:'\201C';position:absolute;top:20px;right:28px;
+  font-family:var(--font-display);font-size:72px;color:var(--gold);
+  opacity:.2;line-height:1;
+}
+.testi:hover{border-color:var(--border2);box-shadow:var(--shadow)}
+.testi-q{
+  font-family:var(--font-display);
+  font-size:clamp(16px,2vw,20px);font-weight:400;
+  line-height:1.58;font-style:italic;
+  margin-bottom:24px;color:var(--text);
+  padding-right:48px;
+}
+.testi-auth{display:flex;align-items:center;gap:12px}
+.tn{font-size:14px;font-weight:500;color:var(--text)}
+.tr{font-size:12px;color:var(--text3);margin-top:2px}
+
+/* =============================================
+   LEAD MAGNETS
+   ============================================= */
+.lm-card{
+  border:1px solid var(--border);border-radius:10px;
+  padding:44px;background:var(--card-bg);
+  position:relative;overflow:hidden;
+  transition:all .25s var(--ease), background .35s;
+}
+.lm-card:hover{border-color:var(--border2);box-shadow:var(--shadow-lg)}
+.lm-blob{
+  position:absolute;top:-40px;right:-40px;
+  width:120px;height:120px;border-radius:50%;
+  background:var(--gold);opacity:.06;
+}
+
+/* =============================================
+   CTA DARK SECTION
+   ============================================= */
+.cta-section{
+  background:#080808;color:#fff;
+  padding:120px 0;text-align:center;
+  position:relative;overflow:hidden;
+}
+[data-theme="dark"] .cta-section{background:#050505}
+.cta-section::before{
+  content:'';position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:var(--gold);opacity:.04;
+}
+.cta-section .d-lg{color:#fff;max-width:580px;margin:0 auto 20px}
+.cta-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+.footer{
+  background:#050505;color:#fff;
+  padding:72px 0 32px;
+  transition:none;
+}
+[data-theme="dark"] .footer{background:#030303}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:44px;margin-bottom:56px}
+.foot-logo{font-family:var(--font-display);font-size:26px;font-weight:400;margin-bottom:16px}
+.foot-logo em{font-style:normal;color:var(--gold)}
+.foot-desc{font-size:13px;color:rgba(255,255,255,.4);line-height:1.8;max-width:240px;margin-bottom:28px}
+.foot-mkts{display:flex;gap:12px;flex-wrap:wrap}
+.foot-mkt{font-size:11px;color:rgba(255,255,255,.28);letter-spacing:.04em}
+.foot-col-h{font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:18px}
+.foot-link{display:block;font-size:13px;color:rgba(255,255,255,.52);margin-bottom:10px;transition:color .2s;cursor:pointer}
+.foot-link:hover{color:#fff}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.foot-copy{font-size:12px;color:rgba(255,255,255,.28)}
+
+/* =============================================
+   PAGE HERO (inner pages)
+   ============================================= */
+.p-hero{
+  padding:88px 0 64px;border-bottom:1px solid var(--border);
+  background:var(--bg);transition:background .35s;
+}
+.p-hero-inner{max-width:700px}
+
+/* =============================================
+   WORK PAGE
+   ============================================= */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:44px}
+.fbtn{
+  padding:8px 20px;border:1px solid var(--border);
+  border-radius:100px;font-size:12px;font-weight:400;
+  color:var(--text3);background:none;cursor:pointer;
+  transition:all .2s;font-family:var(--font-body);
+}
+.fbtn:hover,.fbtn.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.case-card{
+  border:1px solid var(--border);border-radius:10px;
+  overflow:hidden;background:var(--card-bg);
+  transition:all .25s var(--ease), background .35s;cursor:pointer;
+}
+.case-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.case-vis{
+  height:190px;background:#0C0C0C;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:24px;position:relative;overflow:hidden;
+}
+.case-vis::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(192,154,88,.1) 0%,transparent 60%)}
+.case-big{font-family:var(--font-display);font-size:52px;font-weight:400;color:#fff;line-height:1}
+.case-sub{font-size:11px;color:rgba(255,255,255,.38);margin-top:4px}
+.case-body{padding:24px}
+.case-title{font-size:15px;font-weight:500;margin-bottom:8px;line-height:1.38;color:var(--text)}
+.case-excerpt{font-size:13px;color:var(--text2);line-height:1.65}
+
+/* =============================================
+   SERVICES PAGE
+   ============================================= */
+.sp-card{
+  border:1px solid var(--border);border-radius:10px;
+  padding:44px;background:var(--card-bg);
+  margin-bottom:20px;transition:border-color .2s, background .35s;
+}
+.sp-icon{
+  width:48px;height:48px;border-radius:8px;
+  background:var(--bg2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;margin-bottom:22px;
+  transition:background .35s;
+}
+.sp-name{font-family:var(--font-display);font-size:30px;font-weight:400;margin-bottom:12px;color:var(--text)}
+.sp-del{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+.sp-di{font-size:13px;color:var(--text2);display:flex;gap:9px;align-items:flex-start}
+.sp-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:9px}
+.price-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  margin-top:24px;padding-top:22px;border-top:1px solid var(--border);
+}
+.ptier{border:1px solid var(--border);border-radius:6px;padding:20px;transition:border-color .2s}
+.ptier.feat{border-color:var(--gold);background:var(--gold-glow)}
+.pt-n{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px}
+.pt-p{font-family:var(--font-display);font-size:28px;font-weight:400;line-height:1;margin-bottom:12px;color:var(--text)}
+.pt-i{font-size:12px;color:var(--text2);display:flex;gap:6px;margin-bottom:3px}
+
+/* =============================================
+   ABOUT PAGE
+   ============================================= */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.tc{text-align:left}
+.tp{
+  width:100%;aspect-ratio:1;border-radius:8px;
+  background:var(--bg2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:14px;font-family:var(--font-display);
+  font-size:28px;color:var(--text3);overflow:hidden;
+  transition:background .35s;
+}
+.tn-name{font-size:14px;font-weight:500;margin-bottom:3px;color:var(--text)}
+.tn-role{font-size:12px;color:var(--text3)}
+.val-card{border:1px solid var(--border);border-radius:8px;padding:32px;background:var(--card-bg);transition:background .35s}
+.v-num{font-family:var(--font-display);font-size:40px;font-weight:400;color:var(--gold);margin-bottom:12px}
+
+/* =============================================
+   MARKETS PAGE
+   ============================================= */
+.mkt-selector{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:10px;
+  overflow:hidden;margin-bottom:56px;
+  transition:background .35s;
+}
+.mhc{
+  background:var(--card-bg);padding:32px 24px;
+  cursor:pointer;transition:all .2s;
+}
+.mhc:hover,.mhc.on{background:var(--text);color:var(--bg)}
+.mhc.on .mhc-sub,.mhc:hover .mhc-sub{color:rgba(255,255,255,.45)}
+.mhc.on .mhc-stat,.mhc:hover .mhc-stat{color:var(--gold)}
+.mhc-flag{font-size:28px;margin-bottom:14px}
+.mhc-name{font-size:14px;font-weight:500;margin-bottom:4px}
+.mhc-sub{font-size:12px;color:var(--text3);transition:color .2s}
+.mhc-stat{font-family:var(--font-display);font-size:28px;font-weight:400;margin-top:18px;transition:color .2s;color:var(--text)}
+.mkt-detail{display:none;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.mkt-detail.on{display:grid}
+
+/* =============================================
+   INSIGHTS PAGE
+   ============================================= */
+.ins-card{
+  border:1px solid var(--border);border-radius:8px;
+  overflow:hidden;background:var(--card-bg);
+  transition:all .25s var(--ease), background .35s;cursor:pointer;
+}
+.ins-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.ins-img{
+  height:156px;background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  border-bottom:1px solid var(--border);
+  font-family:var(--font-display);font-size:64px;
+  color:var(--border2);transition:background .35s;
+}
+.ins-body{padding:24px}
+.ins-meta{display:flex;gap:10px;margin-bottom:11px;align-items:center;flex-wrap:wrap}
+.ins-title{font-size:15px;font-weight:500;line-height:1.38;margin-bottom:8px;color:var(--text)}
+.ins-exc{font-size:13px;color:var(--text2);line-height:1.65}
+
+/* =============================================
+   CONTACT PAGE
+   ============================================= */
+.cont-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:72px;align-items:start}
+.ci-item{padding:22px 0;border-bottom:1px solid var(--border)}
+.ci-lbl{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.ci-val{font-size:14px;color:var(--text)}
+.fi,.fs,.ft{
+  font-size:14px;font-weight:300;
+  background:var(--card-bg);color:var(--text);
+  border:1px solid var(--border);border-radius:4px;
+  padding:12px 15px;width:100%;outline:none;
+  transition:border-color .2s, background .35s, color .35s;
+}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--gold)}
+.ft{min-height:110px;resize:vertical}
+.f-lbl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;display:block}
+.form-g{display:flex;flex-direction:column;gap:6px}
+.form-2c{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* =============================================
+   AUDIT PAGE
+   ============================================= */
+.aud-prog{height:2px;background:var(--border);border-radius:2px;margin-bottom:48px;overflow:hidden}
+.aud-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s var(--ease)}
+.aud-q{font-family:var(--font-display);font-size:clamp(24px,3.5vw,38px);font-weight:400;line-height:1.28;margin-bottom:32px;color:var(--text)}
+.aud-opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.aopt{
+  border:1px solid var(--border);border-radius:8px;
+  padding:18px 20px;text-align:left;
+  font-size:14px;font-weight:300;color:var(--text2);
+  background:var(--card-bg);cursor:pointer;
+  transition:all .2s var(--ease);font-family:var(--font-body);
+  line-height:1.5;
+}
+.aopt:hover{border-color:var(--border2);color:var(--text);background:var(--bg2)}
+.aopt.sel{border-color:var(--gold);background:var(--gold-glow);color:var(--text)}
+.score-ring-n{font-family:var(--font-display);font-size:80px;font-weight:400;color:var(--gold);line-height:1;text-align:center;margin-bottom:8px}
+.score-ring-l{font-size:14px;color:var(--text3);text-align:center;margin-bottom:36px}
+.rec-item{border:1px solid var(--border);border-radius:8px;padding:24px;background:var(--card-bg);margin-bottom:12px;display:flex;gap:16px;transition:background .35s}
+.rec-n{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  background:var(--gold-glow);border:1px solid rgba(192,154,88,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:600;color:var(--gold);
+}
+
+/* =============================================
+   CALCULATOR PAGE
+   ============================================= */
+.calc-out{
+  background:#070707;color:#fff;
+  border-radius:10px;padding:44px;text-align:center;margin-top:20px;
+  position:relative;overflow:hidden;
+}
+[data-theme="dark"] .calc-out{background:#050505;border:1px solid rgba(255,255,255,.08)}
+.calc-out::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:300px;height:300px;border-radius:50%;background:var(--gold);opacity:.05}
+.calc-rn{font-family:var(--font-display);font-size:64px;font-weight:400;color:var(--gold);line-height:1}
+input[type="range"]{
+  -webkit-appearance:none;width:100%;height:3px;
+  background:var(--border);border-radius:2px;outline:none;
+}
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--gold);cursor:pointer;border:2px solid var(--bg);
+  box-shadow:0 0 0 2px var(--gold);transition:transform .15s;
+}
+input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+
+/* =============================================
+   ANIMATIONS
+   ============================================= */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.anim-1{animation:fadeUp .7s var(--ease) both}
+.anim-2{animation:fadeUp .7s .1s var(--ease) both}
+.anim-3{animation:fadeUp .7s .2s var(--ease) both}
+.anim-4{animation:fadeUp .7s .3s var(--ease) both}
+.anim-5{animation:fadeUp .7s .4s var(--ease) both}
+
+[data-r]{opacity:0;transform:translateY(20px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+[data-r].in{opacity:1;transform:translateY(0)}
+[data-r][data-d="1"]{transition-delay:.1s}[data-r][data-d="2"]{transition-delay:.2s}
+[data-r][data-d="3"]{transition-delay:.3s}[data-r][data-d="4"]{transition-delay:.4s}
+[data-r][data-d="5"]{transition-delay:.5s}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media(max-width:1024px){
+  .wrap{padding:0 32px}
+  .nav{padding:0 32px}
+  .hero-inner{padding:60px 32px 52px}
+  .hero-scroll{left:32px}
+  .hero-stats{right:32px;bottom:48px}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .g4,.method-grid,.mkt-selector{grid-template-columns:repeat(2,1fr)}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .wrap{padding:0 20px}
+  .nav{padding:0 20px}
+  .hero-inner{padding:44px 20px 180px}
+  .hero-sub-row{grid-template-columns:1fr;gap:28px}
+  .hero-ctas{align-items:flex-start}
+  .hero-stats{right:20px;bottom:32px;flex-wrap:wrap;max-width:calc(100vw - 40px)}
+  .hstat{padding:14px 18px}
+  .hero-scroll{display:none}
+  .hero-circle{width:400px;height:400px}
+  .nav-center{display:none}
+  .hamburger{display:flex}
+  .hero-headline .line2{margin-left:28px}
+  .g2,.g3,.contrast-grid,.cf-grid,.mpanel.on,.mkt-detail.on,.cont-grid,.sec-header-row,.aud-opts,.form-2c{grid-template-columns:1fr}
+  .g4,.method-grid,.mkt-selector{grid-template-columns:1fr 1fr}
+  .sec{padding:72px 0}
+  .cta-btns{flex-direction:column;align-items:center}
+  .foot-grid{grid-template-columns:1fr}
+  .hero-mkts-row{flex-wrap:wrap}
+  .hmkt{border:none;padding:2px 10px 2px 0}
+  .price-row{grid-template-columns:1fr}
+  .hero-pill{display:none}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  .g4,.mkt-selector,.method-grid{grid-template-columns:1fr}
+  .aud-opts{grid-template-columns:1fr}
+  .two-line-heading span{white-space:normal}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     NAV
+     ══════════════════════════════ -->
+<nav class="nav" id="mainNav">
+  <div class="nav-logo" onclick="go('home')">Nomads<em>.</em></div>
+  <div class="nav-center">
+    <button class="nav-link" onclick="go('work')">Work</button>
+    <button class="nav-link" onclick="go('services')">Services</button>
+    <button class="nav-link" onclick="go('about')">About</button>
+    <button class="nav-link" onclick="go('markets')">Markets</button>
+    <button class="nav-link" onclick="go('insights')">Insights</button>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" title="Toggle day/night mode">☀</button>
+    <button class="btn btn-gold" onclick="go('contact')" style="padding:10px 22px;font-size:12px">Book a call</button>
+    <div class="hamburger" id="hamburger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mob-nav" id="mobNav">
+  <span class="mob-link" onclick="go('work');toggleMob()">Work</span>
+  <span class="mob-link" onclick="go('services');toggleMob()">Services</span>
+  <span class="mob-link" onclick="go('about');toggleMob()">About</span>
+  <span class="mob-link" onclick="go('markets');toggleMob()">Markets</span>
+  <span class="mob-link" onclick="go('insights');toggleMob()">Insights</span>
+  <button class="btn btn-gold" style="width:fit-content;margin-top:8px" onclick="go('contact');toggleMob()">Book a call</button>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: HOME
+     ══════════════════════════════ -->
+<div class="page on" id="p-home">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-circle"></div>
+    <div class="hero-circle2"></div>
+    <div class="hero-line-v"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-grain"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow anim-1">
+      <div class="hero-eline"></div>
+      <div class="hero-mkts-row">
+        <span class="hmkt">India</span>
+        <span class="hmkt">Dubai</span>
+        <span class="hmkt">Australia</span>
+        <span class="hmkt">USA</span>
+      </div>
+      <div class="hero-pill">
+        <span class="hero-pill-dot"></span>
+        Taking new clients — 2 spots open
+      </div>
+    </div>
+    <h1 class="d-hero hero-headline anim-2">
+      <span class="line1">Growth you can</span>
+      <span class="line2"><em>see, measure,</em></span>
+      <span class="line3">
+        <span class="line3-text">and trust.</span>
+      </span>
+    </h1>
+    <div class="hero-sub-row anim-3">
+      <p class="body-lg hero-sub">Most agencies show you dashboards. We show you growth — documented, attributed, and built to last across four markets. Every claim we make is verifiable.</p>
+      <div class="hero-ctas">
+        <button class="btn btn-gold btn-arrow" onclick="go('audit')">Get your free audit</button>
+        <button class="btn btn-outline" onclick="go('work')">See our work</button>
+        <p class="hero-cta-note">No pitch. No obligation. Results in 4 minutes.</p>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll anim-4">
+    <div class="scroll-track"></div>
+    <span class="scroll-lbl">scroll</span>
+  </div>
+  <div class="hero-stats anim-5">
+    <div class="hstat"><div class="hstat-n" data-cnt="340">0</div><div class="hstat-l">campaigns</div></div>
+    <div class="hstat"><div class="hstat-n">₹42Cr+</div><div class="hstat-l">revenue driven</div></div>
+    <div class="hstat"><div class="hstat-n" data-cnt="94">0</div><div class="hstat-l" data-sfx="%">satisfied</div></div>
+    <div class="hstat"><div class="hstat-n">4</div><div class="hstat-l">markets</div></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ti">Performance Marketing</span><span class="ti">SEO & AI Search</span><span class="ti">Brand Strategy</span><span class="ti">Content & Creative</span><span class="ti">Web & CRO</span><span class="ti">Influencer & Partnerships</span><span class="ti">India</span><span class="ti">Dubai</span><span class="ti">Australia</span><span class="ti">USA</span>
+    <span class="ti">Performance Marketing</span><span class="ti">SEO & AI Search</span><span class="ti">Brand Strategy</span><span class="ti">Content & Creative</span><span class="ti">Web & CRO</span><span class="ti">Influencer & Partnerships</span><span class="ti">India</span><span class="ti">Dubai</span><span class="ti">Australia</span><span class="ti">USA</span>
+  </div>
+</div>
+
+<!-- CONTRAST: OLD vs NOMADS WAY -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-header" data-r>
+      <span class="lbl">The problem we're solving</span>
+      <h2 class="d-xl two-line-heading" style="margin-top:8px"><span>We built Nomads because we were tired</span><span>of the same broken promises.</span></h2>
+    </div>
+    <div class="contrast-grid">
+      <div data-r>
+        <p class="cg-head">The old agency way</p>
+        <div class="cg-item"><svg class="cg-x" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Reports full of impressions with no revenue correlation</div>
+        <div class="cg-item"><svg class="cg-x" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Senior talent pitches — junior team delivers the work</div>
+        <div class="cg-item"><svg class="cg-x" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Opaque pricing that changes after you sign</div>
+        <div class="cg-item"><svg class="cg-x" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Generic strategy copy-pasted across every client</div>
+        <div class="cg-item" style="border:none"><svg class="cg-x" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Black-box tools you can't audit or access yourself</div>
+      </div>
+      <div data-r data-d="2">
+        <p class="cg-head" style="color:var(--text)">The Nomads way</p>
+        <div class="cg-item aff"><div class="cg-dot"></div>Revenue-first reporting. Every metric tied to a business outcome.</div>
+        <div class="cg-item aff"><div class="cg-dot"></div>Named senior account lead visible before you sign anything.</div>
+        <div class="cg-item aff"><div class="cg-dot"></div>Transparent pricing ranges published openly on our website.</div>
+        <div class="cg-item aff"><div class="cg-dot"></div>Strategy built from your business data, never a template.</div>
+        <div class="cg-item aff" style="border:none"><div class="cg-dot"></div>Full access to every platform, every report, every decision.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES PREVIEW -->
+<section class="sec" style="background:var(--bg2);padding-top:80px;padding-bottom:80px;transition:background .35s">
+  <div class="wrap">
+    <div class="sec-header-row" data-r>
+      <div><span class="lbl">What we solve</span><h2 class="d-xl two-line-heading" style="margin-top:6px"><span>Every service starts</span><span>with your problem.</span></h2></div>
+      <button class="btn btn-outline btn-arrow" onclick="go('services')" style="flex-shrink:0">All services</button>
+    </div>
+    <div class="g3">
+      <div class="svc-card" data-r onclick="go('services')">
+        <p class="svc-prob">"Our ad spend is high but conversions are low."</p>
+        <h3 class="svc-name">Performance Marketing</h3>
+        <p class="svc-desc">Full-funnel paid campaigns on Google, Meta, and programmatic — built around revenue targets, not click volume.</p>
+        <div class="svc-link">Explore <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="svc-card" data-r data-d="1" onclick="go('services')">
+        <p class="svc-prob">"We can't be found organically. Competitors outrank us."</p>
+        <h3 class="svc-name">SEO & AI Search</h3>
+        <p class="svc-desc">Technical SEO and AI-native search optimisation built for 2026's landscape — where AI Overviews dominate.</p>
+        <div class="svc-link">Explore <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="svc-card" data-r data-d="2" onclick="go('services')">
+        <p class="svc-prob">"People can't tell what we do or why we're different."</p>
+        <h3 class="svc-name">Brand Strategy</h3>
+        <p class="svc-desc">Positioning and identity that makes your brand instantly understood and deeply trusted across markets.</p>
+        <div class="svc-link">Explore <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="svc-card" data-r onclick="go('services')">
+        <p class="svc-prob">"Our content gets no engagement. It just disappears."</p>
+        <h3 class="svc-name">Content & Creative</h3>
+        <p class="svc-desc">Editorial content and creative production that earns attention rather than interrupting it.</p>
+        <div class="svc-link">Explore <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="svc-card" data-r data-d="1" onclick="go('services')">
+        <p class="svc-prob">"We get traffic but nobody converts. The site leaks."</p>
+        <h3 class="svc-name">Web & CRO</h3>
+        <p class="svc-desc">Website design, development, and conversion optimisation. Your site should be your best sales rep.</p>
+        <div class="svc-link">Explore <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="svc-card" data-r data-d="2" onclick="go('services')">
+        <p class="svc-prob">"We don't know which influencers actually move the needle."</p>
+        <h3 class="svc-name">Influencer & Partnerships</h3>
+        <p class="svc-desc">Data-led influencer strategy with ROI tracked on every single collaboration. No vanity metrics.</p>
+        <div class="svc-link">Explore <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED CASE STUDY -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-header-row" data-r>
+      <div><span class="lbl">Featured work</span></div>
+      <button class="btn btn-outline btn-arrow" onclick="go('work')" style="flex-shrink:0">All case studies</button>
+    </div>
+    <div class="cf" data-r>
+      <div class="cf-grid">
+        <div class="cf-l">
+          <div>
+            <div style="display:flex;gap:8px;margin-bottom:28px"><span class="tag tag-gold">E-commerce</span><span class="tag tag-muted">India</span></div>
+            <h2 class="d-lg" style="margin-bottom:20px">₹80L to ₹3.2Cr monthly revenue in 9 months.</h2>
+            <p class="body-md" style="margin-bottom:28px">Strong product-market fit, but a broken acquisition funnel. High CPAs, low repeat purchase rate, no content engine. Here's exactly what we did — and what it cost.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px">
+              <span class="tag tag-muted">Performance</span>
+              <span class="tag tag-muted">SEO</span>
+              <span class="tag tag-muted">CRO</span>
+            </div>
+          </div>
+          <button class="btn btn-dark btn-arrow" onclick="go('work')">Read full case study</button>
+        </div>
+        <div class="cf-r">
+          <div class="cf-metric"><div class="cf-num">4×</div><div class="cf-lbl">ROAS improvement in 90 days</div></div>
+          <div class="cf-metric"><div class="cf-num">68%</div><div class="cf-lbl">reduction in cost per acquisition</div></div>
+          <div class="cf-metric"><div class="cf-num">₹3.2Cr</div><div class="cf-lbl">monthly revenue at month 9</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETS -->
+<section class="sec" style="background:var(--bg2);padding-top:80px;padding-bottom:80px;transition:background .35s">
+  <div class="wrap">
+    <div class="sec-header-row" data-r>
+      <div><span class="lbl">Where we operate</span><h2 class="d-xl two-line-heading" style="margin-top:6px"><span>Four markets.</span><span>One standard of proof.</span></h2></div>
+      <button class="btn btn-outline btn-arrow" onclick="go('markets')" style="flex-shrink:0">Market details</button>
+    </div>
+    <div class="mtabs">
+      <button class="mtab on" onclick="mkt('india',this)">India</button>
+      <button class="mtab" onclick="mkt('dubai',this)">Dubai</button>
+      <button class="mtab" onclick="mkt('australia',this)">Australia</button>
+      <button class="mtab" onclick="mkt('usa',this)">USA</button>
+    </div>
+    <div class="mpanel on" id="mp-india">
+      <div><span class="lbl" style="display:block;margin-bottom:12px">India</span><h3 class="d-md" style="margin-bottom:16px">Delhi NCR · Mumbai · Bangalore</h3><p class="body-md" style="margin-bottom:24px">India's D2C boom, app economy, and SME digitisation wave create enormous demand for growth partners who understand vernacular audiences, marketplace dynamics, and the unique pace of Indian consumer behaviour.</p><button class="btn btn-outline btn-arrow" onclick="go('markets')">India market hub</button></div>
+      <div><div class="mstats"><div class="mstat"><div class="mstat-n">60+</div><div class="mstat-l">India clients</div></div><div class="mstat"><div class="mstat-n">₹28Cr</div><div class="mstat-l">revenue driven</div></div><div class="mstat"><div class="mstat-n">4.8★</div><div class="mstat-l">avg. satisfaction</div></div><div class="mstat"><div class="mstat-n">3.1×</div><div class="mstat-l">avg. ROAS lift</div></div></div><div class="mkt-lead"><div class="t-av">AK</div><div><div style="font-size:14px;font-weight:500;color:var(--text)">Arjun Kapoor</div><div style="font-size:12px;color:var(--text3)">Founder & India Lead · Delhi</div></div></div></div>
+    </div>
+    <div class="mpanel" id="mp-dubai">
+      <div><span class="lbl" style="display:block;margin-bottom:12px">Dubai</span><h3 class="d-md" style="margin-bottom:16px">Dubai · Abu Dhabi · GCC</h3><p class="body-md" style="margin-bottom:24px">The UAE's 99%+ internet penetration and government-backed digital economy make it one of the world's highest-opportunity markets. We combine GCC cultural fluency with global performance standards.</p><button class="btn btn-outline btn-arrow" onclick="go('markets')">Dubai market hub</button></div>
+      <div><div class="mstats"><div class="mstat"><div class="mstat-n">35+</div><div class="mstat-l">GCC clients</div></div><div class="mstat"><div class="mstat-n">AED 18M</div><div class="mstat-l">revenue driven</div></div><div class="mstat"><div class="mstat-n">4.9★</div><div class="mstat-l">avg. satisfaction</div></div><div class="mstat"><div class="mstat-n">2.8×</div><div class="mstat-l">avg. ROAS lift</div></div></div><div class="mkt-lead"><div class="t-av">LM</div><div><div style="font-size:14px;font-weight:500;color:var(--text)">Layla Mansouri</div><div style="font-size:12px;color:var(--text3)">GCC Lead · Dubai</div></div></div></div>
+    </div>
+    <div class="mpanel" id="mp-australia">
+      <div><span class="lbl" style="display:block;margin-bottom:12px">Australia</span><h3 class="d-md" style="margin-bottom:16px">Sydney · Melbourne · Brisbane</h3><p class="body-md" style="margin-bottom:24px">Australia's high digital ad spend per capita, sophisticated consumer market, and trust-first buying culture make it one of the world's most rewarding markets. We bring global performance thinking to an underserved landscape.</p><button class="btn btn-outline btn-arrow" onclick="go('markets')">Australia market hub</button></div>
+      <div><div class="mstats"><div class="mstat"><div class="mstat-n">25+</div><div class="mstat-l">AU clients</div></div><div class="mstat"><div class="mstat-n">AUD 9M</div><div class="mstat-l">revenue driven</div></div><div class="mstat"><div class="mstat-n">4.8★</div><div class="mstat-l">avg. satisfaction</div></div><div class="mstat"><div class="mstat-n">2.9×</div><div class="mstat-l">avg. ROAS lift</div></div></div><div class="mkt-lead"><div class="t-av">TH</div><div><div style="font-size:14px;font-weight:500;color:var(--text)">Tom Hayes</div><div style="font-size:12px;color:var(--text3)">APAC Lead · Sydney</div></div></div></div>
+    </div>
+    <div class="mpanel" id="mp-usa">
+      <div><span class="lbl" style="display:block;margin-bottom:12px">USA</span><h3 class="d-md" style="margin-bottom:16px">New York · San Francisco · Remote</h3><p class="body-md" style="margin-bottom:24px">The US market rewards specialisation and radical proof. We focus on B2B SaaS and premium D2C — delivering enterprise-level strategy at growth-stage speed, for a fraction of enterprise cost.</p><button class="btn btn-outline btn-arrow" onclick="go('markets')">USA market hub</button></div>
+      <div><div class="mstats"><div class="mstat"><div class="mstat-n">20+</div><div class="mstat-l">US clients</div></div><div class="mstat"><div class="mstat-n">$4.2M</div><div class="mstat-l">revenue driven</div></div><div class="mstat"><div class="mstat-n">4.7★</div><div class="mstat-l">avg. satisfaction</div></div><div class="mstat"><div class="mstat-n">3.4×</div><div class="mstat-l">avg. ROAS lift</div></div></div><div class="mkt-lead"><div class="t-av">JW</div><div><div style="font-size:14px;font-weight:500;color:var(--text)">Jessica Wang</div><div style="font-size:12px;color:var(--text3)">Head of Performance · SF</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-header-row" data-r>
+      <div><span class="lbl">How we work</span><h2 class="d-xl two-line-heading" style="margin-top:6px"><span>The NOMADS Framework —</span><span>named, documented, repeatable.</span></h2></div>
+      <button class="btn btn-outline btn-arrow" onclick="go('about')" style="flex-shrink:0">Full methodology</button>
+    </div>
+    <div class="method-grid">
+      <div class="ms" data-r><div class="ml">N</div><div class="mn">Navigate</div><div class="md">Deep diagnostic of your entire marketing ecosystem. Data before opinion — always.</div></div>
+      <div class="ms" data-r data-d="1"><div class="ml">O</div><div class="mn">Orient</div><div class="md">Custom growth strategy built from your data. No templates, ever.</div></div>
+      <div class="ms" data-r data-d="2"><div class="ml">M</div><div class="mn">Magnify</div><div class="md">Identify your 3 highest-leverage opportunities. Ruthless prioritisation.</div></div>
+      <div class="ms" data-r data-d="3"><div class="ml">A</div><div class="mn">Accelerate</div><div class="md">Weekly execution cycles. Test, learn, optimise. Speed without chaos.</div></div>
+      <div class="ms" data-r data-d="4"><div class="ml">D</div><div class="mn">Disclose</div><div class="md">Revenue-first reporting, every week. Every metric has a "so what."</div></div>
+      <div class="ms" data-r data-d="5"><div class="ml">S</div><div class="mn">Sustain</div><div class="md">Monthly strategy review against your actual business goals.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec" style="background:var(--bg2);padding-top:80px;padding-bottom:80px;transition:background .35s">
+  <div class="wrap">
+    <div class="sec-header" data-r><span class="lbl">Client voices</span></div>
+    <div class="g2" style="gap:20px">
+      <div class="testi" data-r><p class="testi-q">"For the first time, I could trace every rupee of marketing spend to an actual customer. Nomads didn't just run campaigns — they rebuilt how we think about growth."</p><div class="testi-auth"><div class="t-av">RK</div><div><div class="tn">Rahul Khanna</div><div class="tr">Founder & CEO, NovaDerm India</div></div></div></div>
+      <div class="testi" data-r data-d="2"><p class="testi-q">"We came in with AED 80K/month in spend and left three months later with 3.2× ROAS and a team that actually explains every single decision they make."</p><div class="testi-auth"><div class="t-av">SA</div><div><div class="tn">Sarah Al-Mansoori</div><div class="tr">CMO, Luxe Living Dubai</div></div></div></div>
+      <div class="testi" data-r><p class="testi-q">"Australian agencies gave us brand fluff. Nomads gave us a growth system. Our Sydney store grew 210% in six months with full, traceable attribution."</p><div class="testi-auth"><div class="t-av">JM</div><div><div class="tn">James McAllister</div><div class="tr">Director, Coastal & Co. Sydney</div></div></div></div>
+      <div class="testi" data-r data-d="2"><p class="testi-q">"We interviewed 12 agencies. Nomads was the only one who asked about our business model before pitching a single service. That told us everything."</p><div class="testi-auth"><div class="t-av">PL</div><div><div class="tn">Priya Lal</div><div class="tr">VP Marketing, Vertex SaaS US</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD MAGNETS -->
+<section class="sec">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:52px" data-r>
+      <span class="lbl" style="display:block;margin-bottom:14px">Start before you sign</span>
+      <h2 class="d-xl">Two free tools that prove our thinking.</h2>
+    </div>
+    <div class="g2" style="gap:20px">
+      <div class="lm-card" data-r>
+        <div class="lm-blob"></div>
+        <span class="tag tag-gold" style="margin-bottom:22px;display:inline-block">Free · 4 minutes</span>
+        <h3 style="font-size:22px;font-weight:500;margin-bottom:12px;font-family:var(--font-display);color:var(--text)">Get your free marketing audit</h3>
+        <p class="body-md" style="margin-bottom:28px">5 questions. Personalised score + 3 actionable recommendations — delivered instantly. No sales call required to see your results.</p>
+        <button class="btn btn-dark btn-arrow" onclick="go('audit')">Start the audit</button>
+      </div>
+      <div class="lm-card" data-r data-d="2">
+        <div class="lm-blob"></div>
+        <span class="tag tag-muted" style="margin-bottom:22px;display:inline-block">Calculator</span>
+        <h3 style="font-size:22px;font-weight:500;margin-bottom:12px;font-family:var(--font-display);color:var(--text)">See what better marketing returns</h3>
+        <p class="body-md" style="margin-bottom:28px">Enter your spend and industry. Get a projected ROI range with the methodology explained. Instant, no email required.</p>
+        <button class="btn btn-outline btn-arrow" onclick="go('calc')">Use the calculator</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA DARK -->
+<section class="cta-section">
+  <div class="wrap" style="position:relative;z-index:1">
+    <span class="lbl" style="display:block;margin-bottom:20px;color:rgba(192,154,88,.7)">Let's talk</span>
+    <h2 class="d-lg" style="max-width:540px;margin:0 auto 20px">Ready to see what's actually possible?</h2>
+    <p style="color:rgba(255,255,255,.45);font-size:16px;line-height:1.8;max-width:360px;margin:0 auto 48px">We take 3–5 new clients per quarter. Here's how to find out if we're the right fit.</p>
+    <div class="cta-btns">
+      <button class="btn btn-gold btn-arrow" onclick="go('contact')">Book a free strategy call</button>
+      <button class="btn btn-ghost-w" onclick="go('audit')">Get your free audit first</button>
+    </div>
+    <p style="font-size:12px;color:rgba(255,255,255,.25);margin-top:20px">Responds within 4 business hours · No obligation · No pitch decks</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><div class="foot-logo">Nomads<em>.</em></div><p class="foot-desc">The growth partner that proves everything. Radical transparency, documented results, human accountability — across four markets.</p><div class="foot-mkts"><span class="foot-mkt">India</span><span style="color:rgba(255,255,255,.15)">·</span><span class="foot-mkt">Dubai</span><span style="color:rgba(255,255,255,.15)">·</span><span class="foot-mkt">Australia</span><span style="color:rgba(255,255,255,.15)">·</span><span class="foot-mkt">USA</span></div></div>
+      <div><p class="foot-col-h">Services</p><span class="foot-link" onclick="go('services')">Performance Marketing</span><span class="foot-link" onclick="go('services')">SEO & AI Search</span><span class="foot-link" onclick="go('services')">Brand Strategy</span><span class="foot-link" onclick="go('services')">Content & Creative</span><span class="foot-link" onclick="go('services')">Web & CRO</span><span class="foot-link" onclick="go('services')">Influencer</span></div>
+      <div><p class="foot-col-h">Markets</p><span class="foot-link" onclick="go('markets')">India</span><span class="foot-link" onclick="go('markets')">Dubai</span><span class="foot-link" onclick="go('markets')">Australia</span><span class="foot-link" onclick="go('markets')">USA</span></div>
+      <div><p class="foot-col-h">Company</p><span class="foot-link" onclick="go('about')">About</span><span class="foot-link" onclick="go('work')">Case Studies</span><span class="foot-link" onclick="go('insights')">Insights</span><span class="foot-link" onclick="go('contact')">Contact</span></div>
+      <div><p class="foot-col-h">Resources</p><span class="foot-link" onclick="go('audit')">Free Audit</span><span class="foot-link" onclick="go('calc')">ROI Calculator</span><span class="foot-link" onclick="go('insights')">Market Reports</span></div>
+    </div>
+    <div class="foot-bottom"><p class="foot-copy">© 2026 Nomads Digital. All rights reserved.</p><div style="display:flex;gap:20px"><span style="font-size:12px;color:rgba(255,255,255,.25);cursor:pointer">Privacy</span><span style="font-size:12px;color:rgba(255,255,255,.25);cursor:pointer">Terms</span></div></div>
+  </div>
+</footer>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: WORK
+     ══════════════════════════════ -->
+<div class="page" id="p-work">
+<div class="p-hero"><div class="wrap"><div class="p-hero-inner"><span class="lbl" style="display:block;margin-bottom:14px">Case studies</span><h1 class="d-xl" style="margin-bottom:18px">Work that <em>proves itself.</em></h1><p class="body-lg">Every number is real, verified, and attributed to a specific strategy. We show the challenge, the thinking, and the result — including what didn't work.</p></div></div></div>
+<section class="sec"><div class="wrap">
+  <div class="filter-bar">
+    <button class="fbtn on" onclick="fw('all',this)">All work</button>
+    <button class="fbtn" onclick="fw('india',this)">India</button>
+    <button class="fbtn" onclick="fw('dubai',this)">Dubai</button>
+    <button class="fbtn" onclick="fw('australia',this)">Australia</button>
+    <button class="fbtn" onclick="fw('usa',this)">USA</button>
+    <button class="fbtn" onclick="fw('perf',this)">Performance</button>
+    <button class="fbtn" onclick="fw('seo',this)">SEO</button>
+    <button class="fbtn" onclick="fw('brand',this)">Brand</button>
+    <button class="fbtn" onclick="fw('wedding',this)">Wedding</button>
+    <button class="fbtn" onclick="fw('edtech',this)">EdTech</button>
+    <button class="fbtn" onclick="fw('profserv',this)">Professional Services</button>
+    <button class="fbtn" onclick="fw('fitness',this)">Fitness</button>
+    <button class="fbtn" onclick="fw('luxury',this)">Luxury</button>
+  </div>
+  <div class="g3" id="wg">
+    <div class="case-card" data-tags="australia realestate perf brand seo"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80') center/cover"><div class="case-big">AUD 89M</div><div class="case-sub">contracted sales · 11 months</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Real Estate</span><span class="tag tag-muted">Australia</span></div><div class="case-title">Gold Coast beachfront apartments: AUD 89M in presales — 48 units, oversold before construction began</div><p class="case-excerpt">A 48-unit beachfront development priced AUD 1.2M–2.8M needed 60% presales in 4 months to satisfy bank funding. We built a cinematic project microsite with drone footage and 3D renders, ran Google Search targeting Sydney and Melbourne investors, and launched a VIP waitlist that attracted 840 registrations before launch day. The project sold out — all 48 units under contract — with a waitlist for stage 2.</p></div></div>
+    <div class="case-card" data-tags="australia realestate perf brand content"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80') center/cover"><div class="case-big">198 lots</div><div class="case-sub">sold in 16 months</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Real Estate</span><span class="tag tag-muted">Australia</span></div><div class="case-title">Perth land estate: 198 lots sold in 16 months — previous agency managed 14 in 8 months on the same project</div><p class="case-excerpt">240 titled lots in Perth's outer north. Previous agency spent AUD 180K over 8 months with only 14 sales. We identified the real buyer — first-home buyers aged 26–35 using the First Home Guarantee. Rebuilt all creative around "your first home, not someone else's investment," ran a Defence Force campaign targeting DHOAS eligibility, and built a Land Size Calculator tool — driving AUD 74M in lot sales attributed to digital.</p></div></div>
+    <div class="case-card" data-tags="india perf"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&q=80') center/cover"><div class="case-big">4×</div><div class="case-sub">ROAS improvement</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">E-commerce</span><span class="tag tag-muted">India</span></div><div class="case-title">D2C skincare: ₹80L to ₹3.2Cr monthly revenue in 9 months</div><p class="case-excerpt">Rebuilt the full acquisition funnel, reduced CPA by 68%, and launched a content engine driving 40% of revenue organically.</p></div></div>
+    <div class="case-card" data-tags="dubai perf brand"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200&q=80') center/cover"><div class="case-big">3.2×</div><div class="case-sub">ROAS on AED 80K/month</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Real Estate</span><span class="tag tag-muted">Dubai</span></div><div class="case-title">Luxury developer: AED 4.2M in qualified leads in 90 days</div><p class="case-excerpt">GCC-first paid strategy combining Arabic-language creative with high-intent search targeting for off-plan properties.</p></div></div>
+    <div class="case-card" data-tags="australia seo perf"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&q=80') center/cover"><div class="case-big">210%</div><div class="case-sub">revenue growth · 6 months</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Retail</span><span class="tag tag-muted">Australia</span></div><div class="case-title">Sydney lifestyle brand: 210% revenue growth via omnichannel</div><p class="case-excerpt">Google Shopping, Meta retargeting, and an SEO content engine dominating coastal lifestyle search in Australia.</p></div></div>
+    <div class="case-card" data-tags="usa seo perf"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80') center/cover"><div class="case-big">$2.1M</div><div class="case-sub">ARR added in 8 months</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">B2B SaaS</span><span class="tag tag-muted">USA</span></div><div class="case-title">US SaaS startup: $2.1M ARR through content + paid search</div><p class="case-excerpt">Built an inbound engine from scratch — SEO authority, LinkedIn thought leadership, targeted SEM for demo bookings.</p></div></div>
+    <div class="case-card" data-tags="india brand seo"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&q=80') center/cover"><div class="case-big">580%</div><div class="case-sub">organic traffic increase</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Fintech</span><span class="tag tag-muted">India</span></div><div class="case-title">Fintech app: 580% organic growth and category authority</div><p class="case-excerpt">Category-defining content strategy and technical SEO overhaul — now the default answer for personal finance queries.</p></div></div>
+    <div class="case-card" data-tags="australia brand"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&q=80') center/cover"><div class="case-big">48%</div><div class="case-sub">increase in brand recall</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Hospitality</span><span class="tag tag-muted">Australia</span></div><div class="case-title">Melbourne hotel group: budget to boutique repositioning</div><p class="case-excerpt">Brand strategy, visual identity rebuild, and digital presence overhaul. ADR lifted AUD 40/night within 12 months.</p></div></div>
+    <div class="case-card" data-tags="dubai brand seo"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80') center/cover"><div class="case-big">2.4×</div><div class="case-sub">organic leads increase</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Education</span><span class="tag tag-muted">Dubai</span></div><div class="case-title">UAE edtech platform: GCC brand launch driving 12K sign-ups</div><p class="case-excerpt">Bilingual brand positioning, Arabic SEO content, and influencer programme that drove 12,000 sign-ups in month one.</p></div></div>
+    <div class="case-card" data-tags="usa brand perf"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=80') center/cover"><div class="case-big">340%</div><div class="case-sub">increase in MQLs · 6 months</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">B2B Tech</span><span class="tag tag-muted">USA</span></div><div class="case-title">US B2B platform: 340% MQL growth through demand generation</div><p class="case-excerpt">Full-funnel demand gen redesign. Repositioned from features to outcomes, rebuilt the entire paid channel mix.</p></div></div>
+    <div class="case-card" data-tags="india perf seo"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1200&q=80') center/cover"><div class="case-big">₹18Cr</div><div class="case-sub">GMV driven · Q1 2026</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Marketplace</span><span class="tag tag-muted">India</span></div><div class="case-title">Indian marketplace app: ₹18Cr GMV in a single quarter</div><p class="case-excerpt">Performance marketing overhaul across Meta and Google. First-party data strategy reduced CAC by 44%.</p></div></div>
+    <div class="case-card" data-tags="india brand wedding luxury"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80') center/cover"><div class="case-big">₹4.8Cr</div><div class="case-sub">revenue booked · wedding season</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Wedding</span><span class="tag tag-muted">India</span></div><div class="case-title">Jaipur luxury wedding planner: ₹4.8Cr in bookings from Instagram alone</div><p class="case-excerpt">A boutique wedding planning studio with stunning portfolio work but zero digital discoverability. We built an Instagram content engine, partnered with 8 bridal influencers, and ran Meta lead ads — 340 inquiries, 28 full-planning contracts.</p></div></div>
+    <div class="case-card" data-tags="india seo perf edtech"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=1200&q=80') center/cover"><div class="case-big">2.2M</div><div class="case-sub">monthly active learners</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">EdTech</span><span class="tag tag-muted">India</span></div><div class="case-title">Indian EdTech platform: 0 to 2.2M monthly active learners in 14 months</div><p class="case-excerpt">A UPSC prep platform with a ₹3,200 CAC. We built a free content moat — 400 YouTube videos, a daily quiz feature, and an SEO blog. Free-to-paid converted at 18%, CAC dropped to ₹480.</p></div></div>
+    <div class="case-card" data-tags="dubai brand seo luxury"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1200&q=80') center/cover"><div class="case-big">AED 2.1M</div><div class="case-sub">direct booking revenue added</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Wellness</span><span class="tag tag-muted">Dubai</span></div><div class="case-title">Dubai luxury spa resort: AED 2.1M in direct bookings, OTA dependency cut in half</div><p class="case-excerpt">A 5-star spa near JBR was paying 28% commission on 71% of reservations. Google Hotel Ads, a loyalty page, 6 UAE creator staycations, and an email sequence lifted direct bookings from 29% to 58% in 9 months.</p></div></div>
+    <div class="case-card" data-tags="india seo brand profserv"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80') center/cover"><div class="case-big">380%</div><div class="case-sub">inbound inquiry growth</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Professional Services</span><span class="tag tag-muted">India</span></div><div class="case-title">Mumbai CA firm: 380% growth in inbound inquiries — no cold calling, pure content</div><p class="case-excerpt">A 12-partner CA firm in BKC with zero digital presence. A weekly LinkedIn tax explainer, an 80,000-download GST guide, and a YouTube channel made the managing partner the go-to media source for tax commentary.</p></div></div>
+    <div class="case-card" data-tags="india perf"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=1200&q=80') center/cover"><div class="case-big">3.8×</div><div class="case-sub">ROAS on ₹25L/month spend</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">E-commerce</span><span class="tag tag-muted">India</span></div><div class="case-title">Ayurvedic hair care brand: ₹25L ad spend generating ₹95L monthly at 3.8× ROAS</div><p class="case-excerpt">Stock-photo creatives were killing Meta ROAS at 0.9×. We produced 60 pieces of authentic UGC, rebuilt the campaign around video-view retargeting, and introduced a subscription bundle that lifted AOV from ₹780 to ₹1,340.</p></div></div>
+    <div class="case-card" data-tags="australia seo perf"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1200&q=80') center/cover"><div class="case-big">AUD 8.4M</div><div class="case-sub">additional procedure revenue</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Healthcare</span><span class="tag tag-muted">Australia</span></div><div class="case-title">Sydney private hospital: AUD 8.4M in additional procedure bookings through digital</div><p class="case-excerpt">A 120-bed hospital was losing electives to a newer competitor. Procedure-specific SEO and Google Ads for 12 top revenue procedures, a review generation system, and a GP referral portal grew bookings 44% in 14 months.</p></div></div>
+    <div class="case-card" data-tags="india perf brand fitness"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80') center/cover"><div class="case-big">14K</div><div class="case-sub">new memberships · 6 months</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Fitness</span><span class="tag tag-muted">India</span></div><div class="case-title">Premium gym chain: 14,000 new memberships across 8 cities in 6 months</div><p class="case-excerpt">Expanding from 4 to 12 locations without discounting their ₹3,500/month price. Hyper-local Meta within 3km of each gym, 24 city-specific influencer pre-launch tours, and a referral programme cut fill time from 9 months to 11 weeks.</p></div></div>
+    <div class="case-card" data-tags="dubai brand perf seo luxury"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=1200&q=80') center/cover"><div class="case-big">AED 12M</div><div class="case-sub">in watch sales attributed</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Luxury</span><span class="tag tag-muted">Dubai</span></div><div class="case-title">Dubai luxury watch retailer: AED 12M in attributed sales — tourists and expats targeted</div><p class="case-excerpt">A multi-brand boutique in Dubai Mall relied on foot traffic only. Google Search for "buy Rolex Dubai" and tourist-intent terms, plus YouTube pre-roll targeting DXB arrivals, drove AED 48,000 average order value.</p></div></div>
+    <div class="case-card" data-tags="australia seo brand profserv"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1200&q=80') center/cover"><div class="case-big">AUD 6.2M</div><div class="case-sub">project pipeline generated</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Professional Services</span><span class="tag tag-muted">Australia</span></div><div class="case-title">Melbourne architecture firm: AUD 6.2M project pipeline from content authority strategy</div><p class="case-excerpt">A Fitzroy boutique winning by awards alone. Houzz optimisation, a "House Tour" YouTube series, Pinterest boards by style, and Google Ads for "architect Melbourne renovation" took inbound from 3 to 28 inquiries per month.</p></div></div>
+    <div class="case-card" data-tags="usa perf seo edtech"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1584697964358-3e14ca57658b?w=1200&q=80') center/cover"><div class="case-big">$1.8M</div><div class="case-sub">subscription revenue added</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">EdTech</span><span class="tag tag-muted">USA</span></div><div class="case-title">US online tutoring platform: $1.8M in new subscription revenue in 10 months</div><p class="case-excerpt">A K-12 tutoring platform with NPS 72 but a leaky funnel — 68% of trial users never booked. A 7-touch onboarding sequence, parent dashboard, intent-based Search, and pricing-page A/B test lifted trial-to-paid from 12% to 31%.</p></div></div>
+    <div class="case-card" data-tags="india perf brand luxury"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=1200&q=80') center/cover"><div class="case-big">₹6.4Cr</div><div class="case-sub">annual revenue · from ₹80L</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Jewellery</span><span class="tag tag-muted">India</span></div><div class="case-title">Fashion jewellery brand: ₹80L to ₹6.4Cr annual revenue — 8× growth in 18 months</div><p class="case-excerpt">A Delhi brand selling only on Myntra and Nykaa at 35% commission. We launched DTC, built a Meta + Pinterest engine for women aged 24–38, partnered with 40 micro-influencers, and ran a weekly "Style Drop" email — 68% margin vs 41%.</p></div></div>
+    <div class="case-card" data-tags="australia seo perf brand profserv"><div class="case-vis" style="background:linear-gradient(rgba(10,10,12,.55),rgba(10,10,12,.55)),url('https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1200&q=80') center/cover"><div class="case-big">620%</div><div class="case-sub">growth in qualified consultations</div></div><div class="case-body"><div style="display:flex;gap:6px;margin-bottom:10px"><span class="tag tag-gold">Professional Services</span><span class="tag tag-muted">Australia</span></div><div class="case-title">Melbourne immigration law firm: 620% growth in consultations</div><p class="case-excerpt">A 3-partner firm invisible against large migration agencies. We targeted Indian-origin PR and partner-visa applicants with Hindi and English landing pages, a Hindi-speaking lawyer YouTube series, and Facebook diaspora ads.</p></div></div>
+  </div>
+  <div style="margin-top:60px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:48px;transition:background .35s" data-r>
+    <span class="lbl" style="display:block;margin-bottom:28px">Aggregated across all clients</span>
+    <div class="g4">
+      <div><div style="font-family:var(--font-display);font-size:44px;font-weight:400;color:var(--text)">3.1×</div><div style="font-size:12px;color:var(--text3);margin-top:6px">avg. ROAS improvement</div></div>
+      <div><div style="font-family:var(--font-display);font-size:44px;font-weight:400;color:var(--text)">62%</div><div style="font-size:12px;color:var(--text3);margin-top:6px">avg. CPA reduction</div></div>
+      <div><div style="font-family:var(--font-display);font-size:44px;font-weight:400;color:var(--text)">94%</div><div style="font-size:12px;color:var(--text3);margin-top:6px">client retention rate</div></div>
+      <div><div style="font-family:var(--font-display);font-size:44px;font-weight:400;color:var(--text)">8mo</div><div style="font-size:12px;color:var(--text3);margin-top:6px">avg. time to results</div></div>
+    </div>
+  </div>
+</div></section>
+<section class="cta-section"><div class="wrap" style="position:relative;z-index:1"><h2 class="d-lg">Want results like these?</h2><p style="color:rgba(255,255,255,.45);font-size:16px;max-width:320px;margin:16px auto 40px;line-height:1.8">We have capacity for 2 new clients this quarter.</p><div class="cta-btns"><button class="btn btn-gold btn-arrow" onclick="go('contact')">Book a strategy call</button></div></div></section>
+<footer class="footer"><div class="wrap"><div class="foot-bottom" style="border:none"><p class="foot-copy">© 2026 Nomads Digital.</p><div style="display:flex;gap:16px"><span class="foot-link" onclick="go('home')" style="margin:0">Home</span><span class="foot-link" onclick="go('contact')" style="margin:0">Contact</span></div></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: SERVICES
+     ══════════════════════════════ -->
+<div class="page" id="p-services">
+<div class="p-hero"><div class="wrap"><div class="p-hero-inner"><span class="lbl" style="display:block;margin-bottom:14px">Services</span><h1 class="d-xl" style="margin-bottom:18px">We solve <em>real problems.</em></h1><p class="body-lg">Six service lines, each built around a specific business problem. Every engagement includes a named account lead, weekly revenue reporting, and full platform access.</p></div></div></div>
+<section class="sec"><div class="wrap">
+  <div class="sp-card" data-r>
+    <div class="sp-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2 16l4-8 4 4 3-6 4 10" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:12px;font-style:italic">"Our ads spend is high but conversions are low."</p>
+    <h2 class="sp-name">Performance Marketing</h2>
+    <p class="body-md">Full-funnel paid media across Google, Meta, LinkedIn, TikTok, and programmatic — built around your revenue target. Every campaign attributed to revenue outcomes with weekly plain-language reporting. Market-specific creative across all four markets.</p>
+    <div class="sp-del"><div class="sp-di"><div class="sp-dot"></div>Google Search, Shopping & Display campaigns</div><div class="sp-di"><div class="sp-dot"></div>Meta & Instagram performance creative</div><div class="sp-di"><div class="sp-dot"></div>LinkedIn B2B demand generation</div><div class="sp-di"><div class="sp-dot"></div>Programmatic & retargeting</div><div class="sp-di"><div class="sp-dot"></div>Weekly revenue attribution report</div><div class="sp-di"><div class="sp-dot"></div>Market-specific creative: Hindi, Arabic, English</div></div>
+    <div class="price-row"><div class="ptier"><div class="pt-n">Growth</div><div class="pt-p">₹80K<span style="font-size:14px;font-weight:300">/mo</span></div><div class="pt-i"><span style="color:var(--gold)">·</span>Up to ₹5L ad spend</div><div class="pt-i"><span style="color:var(--gold)">·</span>2 platforms</div></div><div class="ptier feat"><div class="pt-n">Scale</div><div class="pt-p">₹1.8L<span style="font-size:14px;font-weight:300">/mo</span></div><div class="pt-i"><span style="color:var(--gold)">·</span>Up to ₹20L spend</div><div class="pt-i"><span style="color:var(--gold)">·</span>4 platforms + dedicated lead</div></div><div class="ptier"><div class="pt-n">Enterprise</div><div class="pt-p">Custom</div><div class="pt-i"><span style="color:var(--gold)">·</span>Unlimited spend</div><div class="pt-i"><span style="color:var(--gold)">·</span>All platforms, multi-market</div></div></div>
+  </div>
+  <div class="sp-card" data-r>
+    <div class="sp-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="10" cy="10" r="6.5" stroke="var(--gold)" stroke-width="1.5"/><path d="M15 15L20 20" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:12px;font-style:italic">"We can't be found organically. Competitors outrank us."</p>
+    <h2 class="sp-name">SEO & AI Search</h2>
+    <p class="body-md">Technical SEO, content authority-building, and AI-native search optimisation. Built for 2026 — where Google AI Overviews, ChatGPT search, and Perplexity change what ranking means. We build authority that survives algorithm changes and earns citations in AI-generated answers.</p>
+    <div class="sp-del"><div class="sp-di"><div class="sp-dot"></div>Full technical SEO audit & implementation</div><div class="sp-di"><div class="sp-dot"></div>Keyword strategy & content architecture</div><div class="sp-di"><div class="sp-dot"></div>AI search optimisation (SGE, Perplexity)</div><div class="sp-di"><div class="sp-dot"></div>Link authority building</div><div class="sp-di"><div class="sp-dot"></div>Monthly traffic & ranking report with revenue attribution</div></div>
+    <div class="price-row"><div class="ptier"><div class="pt-n">Growth</div><div class="pt-p">₹60K<span style="font-size:14px;font-weight:300">/mo</span></div><div class="pt-i"><span style="color:var(--gold)">·</span>Up to 20 pages/month</div></div><div class="ptier feat"><div class="pt-n">Authority</div><div class="pt-p">₹1.4L<span style="font-size:14px;font-weight:300">/mo</span></div><div class="pt-i"><span style="color:var(--gold)">·</span>Full site + link building</div></div><div class="ptier"><div class="pt-n">Enterprise</div><div class="pt-p">Custom</div><div class="pt-i"><span style="color:var(--gold)">·</span>Multi-domain, multi-language</div></div></div>
+  </div>
+  <div class="sp-card" data-r>
+    <div class="sp-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2L8.5 7H3.5l4 3.5-1.5 5.5L11 13.5l5 2.5-1.5-5.5 4-3.5H13.5L11 2z" stroke="var(--gold)" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:12px;font-style:italic">"People can't tell what we do or why we're different."</p>
+    <h2 class="sp-name">Brand Strategy</h2>
+    <p class="body-md">Positioning, messaging architecture, and visual identity that makes your brand instantly understood and deeply trusted. We build the strategic foundation that makes every touchpoint coherent and compelling — including market-specific positioning for multi-market brands.</p>
+    <div class="sp-del"><div class="sp-di"><div class="sp-dot"></div>Brand positioning & value proposition</div><div class="sp-di"><div class="sp-dot"></div>Messaging hierarchy & tone of voice</div><div class="sp-di"><div class="sp-dot"></div>Visual identity system</div><div class="sp-di"><div class="sp-dot"></div>Audience & competitor research</div><div class="sp-di"><div class="sp-dot"></div>Brand guidelines & complete asset library</div></div>
+    <div class="price-row"><div class="ptier"><div class="pt-n">Positioning</div><div class="pt-p">₹3.5L</div><div class="pt-i"><span style="color:var(--gold)">·</span>One-time strategy project</div></div><div class="ptier feat"><div class="pt-n">Full Identity</div><div class="pt-p">₹8L</div><div class="pt-i"><span style="color:var(--gold)">·</span>Strategy + visual system</div></div><div class="ptier"><div class="pt-n">Rebrand</div><div class="pt-p">Custom</div><div class="pt-i"><span style="color:var(--gold)">·</span>Full rebrand, multi-market</div></div></div>
+  </div>
+  <div class="sp-card" data-r>
+    <div class="sp-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="4" width="18" height="14" rx="2" stroke="var(--gold)" stroke-width="1.5"/><path d="M7 9h8M7 12h5" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:12px;font-style:italic">"Our content gets no engagement. It just disappears."</p>
+    <h2 class="sp-name">Content & Creative</h2>
+    <p class="body-md">Editorial content, video production, and creative strategy that earns attention rather than interrupting it. We build content systems — not one-off posts — that compound in value over time and drive measurable business outcomes.</p>
+    <div class="sp-del"><div class="sp-di"><div class="sp-dot"></div>Content strategy & editorial calendar</div><div class="sp-di"><div class="sp-dot"></div>Long-form articles, reports & guides</div><div class="sp-di"><div class="sp-dot"></div>Social media content & copywriting</div><div class="sp-di"><div class="sp-dot"></div>Video production & scripting</div><div class="sp-di"><div class="sp-dot"></div>Email marketing sequences</div></div>
+    <div class="price-row"><div class="ptier"><div class="pt-n">Starter</div><div class="pt-p">₹55K<span style="font-size:14px;font-weight:300">/mo</span></div><div class="pt-i"><span style="color:var(--gold)">·</span>8 pieces/month</div></div><div class="ptier feat"><div class="pt-n">Growth</div><div class="pt-p">₹1.2L<span style="font-size:14px;font-weight:300">/mo</span></div><div class="pt-i"><span style="color:var(--gold)">·</span>20 pieces + video</div></div><div class="ptier"><div class="pt-n">Authority</div><div class="pt-p">Custom</div><div class="pt-i"><span style="color:var(--gold)">·</span>Full dedicated content team</div></div></div>
+  </div>
+  <div class="sp-card" data-r>
+    <div class="sp-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="3" width="18" height="13" rx="2" stroke="var(--gold)" stroke-width="1.5"/><path d="M7 19h8M11 16v3" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:12px;font-style:italic">"We get traffic but nobody converts. The site is leaking."</p>
+    <h2 class="sp-name">Web & CRO</h2>
+    <p class="body-md">Website design, development, and conversion rate optimisation. Your website should be your best sales rep — working 24/7. Every design decision is backed by data, every change is A/B tested before rollout.</p>
+    <div class="sp-del"><div class="sp-di"><div class="sp-dot"></div>UX audit & conversion analysis</div><div class="sp-di"><div class="sp-dot"></div>Website design & development</div><div class="sp-di"><div class="sp-dot"></div>Landing page creation & A/B testing</div><div class="sp-di"><div class="sp-dot"></div>Analytics setup & heatmap reporting</div><div class="sp-di"><div class="sp-dot"></div>Ongoing CRO programme</div></div>
+    <div class="price-row"><div class="ptier"><div class="pt-n">Audit</div><div class="pt-p">₹45K</div><div class="pt-i"><span style="color:var(--gold)">·</span>One-time full audit</div></div><div class="ptier feat"><div class="pt-n">Build</div><div class="pt-p">₹6–18L</div><div class="pt-i"><span style="color:var(--gold)">·</span>Full website + CMS</div></div><div class="ptier"><div class="pt-n">CRO Retainer</div><div class="pt-p">₹80K<span style="font-size:14px;font-weight:300">/mo</span></div><div class="pt-i"><span style="color:var(--gold)">·</span>Ongoing optimisation</div></div></div>
+  </div>
+  <div class="sp-card" data-r>
+    <div class="sp-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="7" r="3" stroke="var(--gold)" stroke-width="1.5"/><circle cx="4" cy="17" r="2" stroke="var(--gold)" stroke-width="1.5"/><circle cx="18" cy="17" r="2" stroke="var(--gold)" stroke-width="1.5"/><path d="M11 10v3M11 13l-5.5 2M11 13l5.5 2" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:12px;font-style:italic">"We don't know which influencers actually move the needle."</p>
+    <h2 class="sp-name">Influencer & Partnerships</h2>
+    <p class="body-md">Data-led influencer identification, negotiation, campaign management, and performance tracking. We measure ROI on every collaboration — not just reach and impressions. Vetted creator networks across India, GCC, Australia, and the US.</p>
+    <div class="sp-del"><div class="sp-di"><div class="sp-dot"></div>Influencer discovery, vetting & negotiation</div><div class="sp-di"><div class="sp-dot"></div>Brief creation & creative direction</div><div class="sp-di"><div class="sp-dot"></div>Campaign management & compliance</div><div class="sp-di"><div class="sp-dot"></div>Performance tracking & revenue attribution</div><div class="sp-di"><div class="sp-dot"></div>Brand partnership strategy</div></div>
+    <div class="price-row"><div class="ptier"><div class="pt-n">Campaign</div><div class="pt-p">₹75K+</div><div class="pt-i"><span style="color:var(--gold)">·</span>Per campaign</div></div><div class="ptier feat"><div class="pt-n">Programme</div><div class="pt-p">₹1.5L<span style="font-size:14px;font-weight:300">/mo</span></div><div class="pt-i"><span style="color:var(--gold)">·</span>Always-on programme</div></div><div class="ptier"><div class="pt-n">Enterprise</div><div class="pt-p">Custom</div><div class="pt-i"><span style="color:var(--gold)">·</span>Large-scale, multi-market</div></div></div>
+  </div>
+</div></section>
+<section class="cta-section"><div class="wrap" style="position:relative;z-index:1"><h2 class="d-lg">Not sure which service you need?</h2><p style="color:rgba(255,255,255,.45);font-size:16px;max-width:360px;margin:16px auto 40px;line-height:1.8">Start with the free audit. It diagnoses exactly where your growth is stuck.</p><div class="cta-btns"><button class="btn btn-gold btn-arrow" onclick="go('audit')">Get your free audit</button><button class="btn btn-ghost-w" onclick="go('contact')">Talk to us directly</button></div></div></section>
+<footer class="footer"><div class="wrap"><div class="foot-bottom" style="border:none"><p class="foot-copy">© 2026 Nomads Digital.</p><div style="display:flex;gap:16px"><span class="foot-link" onclick="go('home')" style="margin:0">Home</span><span class="foot-link" onclick="go('contact')" style="margin:0">Contact</span></div></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: ABOUT
+     ══════════════════════════════ -->
+<div class="page" id="p-about">
+<div class="p-hero"><div class="wrap"><div class="p-hero-inner"><span class="lbl" style="display:block;margin-bottom:14px">About us</span><h1 class="d-xl" style="margin-bottom:18px">Built to prove <em>everything.</em></h1><p class="body-lg">We started Nomads because we saw too many brilliant brands working with agencies who prioritised their own margins over client outcomes. We built the agency we wished existed.</p></div></div></div>
+<section class="sec"><div class="wrap">
+  <div class="g2" style="gap:72px;align-items:center;margin-bottom:88px">
+    <div data-r>
+      <span class="lbl" style="display:block;margin-bottom:18px">Founder's note</span>
+      <h2 class="d-lg" style="margin-bottom:22px">We got tired of the same story.</h2>
+      <p class="body-lg" style="margin-bottom:18px">After working inside agencies and on client teams across three continents, we saw the same pattern repeat: agencies optimise for their own metrics, not yours. Big retainers. Junior execution. Vanity reports that look impressive but don't move revenue.</p>
+      <p class="body-md">Nomads Digital was founded with one constraint: we would never take a client we couldn't genuinely help. That constraint shapes everything — who we hire, what we charge, how we report, and when we say no.</p>
+    </div>
+    <div data-r data-d="2">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:44px;transition:background .35s">
+        <div style="margin-bottom:28px"><div style="font-family:var(--font-display);font-size:52px;font-weight:400;color:var(--text)">140+</div><div style="font-size:12px;color:var(--text3);margin-top:4px">clients across 4 markets</div></div>
+        <div class="divider" style="margin-bottom:28px"></div>
+        <div style="margin-bottom:28px"><div style="font-family:var(--font-display);font-size:52px;font-weight:400;color:var(--text)">2019</div><div style="font-size:12px;color:var(--text3);margin-top:4px">founded · 7 years of proof</div></div>
+        <div class="divider" style="margin-bottom:28px"></div>
+        <div><div style="font-family:var(--font-display);font-size:52px;font-weight:400;color:var(--text)">0</div><div style="font-size:12px;color:var(--text3);margin-top:4px">clients taken who we couldn't help</div></div>
+      </div>
+    </div>
+  </div>
+
+  <span class="lbl" style="display:block;margin-bottom:32px" data-r>The team</span>
+  <div class="team-grid" data-r>
+    <div class="tc"><div class="tp">AK</div><div class="tn-name">Arjun Kapoor</div><div class="tn-role">Founder & CEO · Delhi</div></div>
+    <div class="tc"><div class="tp">SP</div><div class="tn-name">Sana Patel</div><div class="tn-role">Head of Strategy · Mumbai</div></div>
+    <div class="tc"><div class="tp">LM</div><div class="tn-name">Layla Mansouri</div><div class="tn-role">GCC Lead · Dubai</div></div>
+    <div class="tc"><div class="tp">TH</div><div class="tn-name">Tom Hayes</div><div class="tn-role">APAC Lead · Sydney</div></div>
+    <div class="tc"><div class="tp">JW</div><div class="tn-name">Jessica Wang</div><div class="tn-role">Head of Performance · SF</div></div>
+    <div class="tc"><div class="tp">RN</div><div class="tn-name">Rohan Nair</div><div class="tn-role">Head of SEO · Bangalore</div></div>
+    <div class="tc"><div class="tp">EV</div><div class="tn-name">Emma Vickers</div><div class="tn-role">Creative Director · Melbourne</div></div>
+    <div class="tc"><div class="tp">KA</div><div class="tn-name">Khaled Al-Rashid</div><div class="tn-role">GCC Performance · Dubai</div></div>
+  </div>
+
+  <div style="margin-top:88px" id="methodology">
+    <div style="max-width:560px;margin-bottom:0" data-r>
+      <span class="lbl" style="display:block;margin-bottom:14px">Our process</span>
+      <h2 class="d-xl two-line-heading"><span>The NOMADS Framework —</span><span>named, documented, repeatable.</span></h2>
+    </div>
+    <div class="method-grid">
+      <div class="ms" data-r><div class="ml">N</div><div class="mn">Navigate</div><div class="md">Week 1–2. Two weeks understanding your business. Revenue data, funnel analytics, competitor landscape, audience research. No strategy until we have the full picture.</div></div>
+      <div class="ms" data-r data-d="1"><div class="ml">O</div><div class="mn">Orient</div><div class="md">Week 3. Custom growth strategy built from your data. 12-month roadmap with 90-day sprints, presented with full rationale for every decision.</div></div>
+      <div class="ms" data-r data-d="2"><div class="ml">M</div><div class="mn">Magnify</div><div class="md">Week 4. We identify your 3 highest-leverage opportunities and ruthlessly deprioritise everything else. Most agencies do everything. We do what moves the needle.</div></div>
+      <div class="ms" data-r data-d="3"><div class="ml">A</div><div class="mn">Accelerate</div><div class="md">Month 2+. Weekly execution with a test-learn-optimise rhythm. Every change is hypothesised, tested, and measured before scaling.</div></div>
+      <div class="ms" data-r data-d="4"><div class="ml">D</div><div class="mn">Disclose</div><div class="md">Every week, every month. Revenue-first reporting in plain language. Every metric connected to a business outcome. No impressions without context.</div></div>
+      <div class="ms" data-r data-d="5"><div class="ml">S</div><div class="mn">Sustain</div><div class="md">Monthly strategy review with your named account lead. Are we hitting your goals? We adjust the strategy, not just the tactics.</div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:88px" data-r>
+    <span class="lbl" style="display:block;margin-bottom:32px">Our values — as behaviours, not words</span>
+    <div class="g2" style="gap:16px">
+      <div class="val-card"><div class="v-num">01</div><h3 style="font-size:18px;font-weight:500;margin-bottom:10px;color:var(--text)">Transparency</h3><p class="body-md">We don't say we're transparent — we publish our pricing ranges on the website. Full access to every platform, every ad, every report. You own everything we build for you.</p></div>
+      <div class="val-card"><div class="v-num">02</div><h3 style="font-size:18px;font-weight:500;margin-bottom:10px;color:var(--text)">Accountability</h3><p class="body-md">We name who manages your account before you sign. That person is on your calls, in your reports, and reachable within 4 hours. No anonymous support tickets.</p></div>
+      <div class="val-card"><div class="v-num">03</div><h3 style="font-size:18px;font-weight:500;margin-bottom:10px;color:var(--text)">Honesty over comfort</h3><p class="body-md">If your product is the problem, we'll tell you. If a channel isn't working, we stop it and say why. We'd rather lose a client than tell them what they want to hear.</p></div>
+      <div class="val-card"><div class="v-num">04</div><h3 style="font-size:18px;font-weight:500;margin-bottom:10px;color:var(--text)">Results over activity</h3><p class="body-md">We don't report on outputs. We report on outcomes. The only metric that matters is whether your business is growing in ways that are meaningful to you.</p></div>
+    </div>
+  </div>
+</div></section>
+<section class="cta-section"><div class="wrap" style="position:relative;z-index:1"><h2 class="d-lg">Meet the team that would work on your account.</h2><p style="color:rgba(255,255,255,.45);font-size:16px;max-width:380px;margin:16px auto 40px;line-height:1.8">We introduce you to your named account lead before you sign anything.</p><div class="cta-btns"><button class="btn btn-gold btn-arrow" onclick="go('contact')">Book an introduction call</button></div></div></section>
+<footer class="footer"><div class="wrap"><div class="foot-bottom" style="border:none"><p class="foot-copy">© 2026 Nomads Digital.</p><div style="display:flex;gap:16px"><span class="foot-link" onclick="go('home')" style="margin:0">Home</span><span class="foot-link" onclick="go('contact')" style="margin:0">Contact</span></div></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: MARKETS
+     ══════════════════════════════ -->
+<div class="page" id="p-markets">
+<div class="p-hero"><div class="wrap"><div class="p-hero-inner"><span class="lbl" style="display:block;margin-bottom:14px">Markets</span><h1 class="d-xl" style="margin-bottom:18px">Four markets, <em>one standard.</em></h1><p class="body-lg">We don't claim markets — we operate in them. Each has a dedicated team, local expertise, and documented proof of results.</p></div></div></div>
+<section class="sec"><div class="wrap">
+  <div class="mkt-selector" data-r>
+    <div class="mhc on" id="mhc-india" onclick="mktd('india')"><div class="mhc-flag">🇮🇳</div><div class="mhc-name">India</div><div class="mhc-sub">Delhi · Mumbai · Bangalore</div><div class="mhc-stat">60+ clients</div></div>
+    <div class="mhc" id="mhc-dubai" onclick="mktd('dubai')"><div class="mhc-flag">🇦🇪</div><div class="mhc-name">Dubai</div><div class="mhc-sub">Dubai · Abu Dhabi · GCC</div><div class="mhc-stat">35+ clients</div></div>
+    <div class="mhc" id="mhc-australia" onclick="mktd('australia')"><div class="mhc-flag">🇦🇺</div><div class="mhc-name">Australia</div><div class="mhc-sub">Sydney · Melbourne · Brisbane</div><div class="mhc-stat">25+ clients</div></div>
+    <div class="mhc" id="mhc-usa" onclick="mktd('usa')"><div class="mhc-flag">🇺🇸</div><div class="mhc-name">USA</div><div class="mhc-sub">New York · San Francisco</div><div class="mhc-stat">20+ clients</div></div>
+  </div>
+  <div class="mkt-detail on" id="mktp-india">
+    <div><span class="tag tag-gold" style="display:inline-block;margin-bottom:18px">India</span><h2 class="d-lg" style="margin-bottom:18px">India's digital economy is booming. Are you capturing your share?</h2><p class="body-md" style="margin-bottom:16px">India added 200M+ internet users in the past 4 years. The D2C revolution, UPI-driven commerce, and vernacular digital adoption create massive opportunities — but only for brands with the right strategy.</p><p class="body-md" style="margin-bottom:28px">Our India team is based in Delhi NCR and Bangalore with client experience across Tier-1 and Tier-2 cities. We understand the pace, the platforms, and the cultural nuance.</p><div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px"><div class="sp-di"><div class="sp-dot"></div>Meta & Google with vernacular creative (Hindi, Tamil, Telugu, Kannada)</div><div class="sp-di"><div class="sp-dot"></div>Marketplace strategy: Amazon, Flipkart, Meesho, ONDC</div><div class="sp-di"><div class="sp-dot"></div>D2C acquisition and retention across all verticals</div><div class="sp-di"><div class="sp-dot"></div>B2B SaaS growth for Indian-market software companies</div></div><button class="btn btn-dark btn-arrow" onclick="go('contact')">Talk to our India team</button></div>
+    <div><div class="mstats"><div class="mstat"><div class="mstat-n">60+</div><div class="mstat-l">India clients</div></div><div class="mstat"><div class="mstat-n">₹28Cr</div><div class="mstat-l">revenue driven</div></div><div class="mstat"><div class="mstat-n">4.8★</div><div class="mstat-l">avg. satisfaction</div></div><div class="mstat"><div class="mstat-n">3.1×</div><div class="mstat-l">avg. ROAS lift</div></div></div><div class="mkt-lead" style="margin-top:16px"><div class="t-av">AK</div><div><div style="font-size:14px;font-weight:500;color:var(--text)">Arjun Kapoor</div><div style="font-size:12px;color:var(--text3)">Founder & India Lead · Delhi</div></div></div></div>
+  </div>
+  <div class="mkt-detail" id="mktp-dubai">
+    <div><span class="tag tag-gold" style="display:inline-block;margin-bottom:18px">Dubai</span><h2 class="d-lg" style="margin-bottom:18px">The GCC market rewards quality. Are you positioned for it?</h2><p class="body-md" style="margin-bottom:16px">UAE has 99%+ internet penetration and one of the highest digital ad spends per capita globally. Booming real estate, fintech, and hospitality sectors create year-round demand from high-value consumers.</p><p class="body-md" style="margin-bottom:28px">Our Dubai team combines GCC cultural fluency — including Arabic-first creative — with global performance standards. We understand Ramadan seasonality and regional payment preferences.</p><div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px"><div class="sp-di"><div class="sp-dot"></div>Arabic & English bilingual campaign strategy</div><div class="sp-di"><div class="sp-dot"></div>Real estate, luxury, hospitality & fintech expertise</div><div class="sp-di"><div class="sp-dot"></div>Ramadan & seasonal campaign planning</div><div class="sp-di"><div class="sp-dot"></div>GCC regulatory compliance awareness</div></div><button class="btn btn-dark btn-arrow" onclick="go('contact')">Talk to our Dubai team</button></div>
+    <div><div class="mstats"><div class="mstat"><div class="mstat-n">35+</div><div class="mstat-l">GCC clients</div></div><div class="mstat"><div class="mstat-n">AED 18M</div><div class="mstat-l">revenue driven</div></div><div class="mstat"><div class="mstat-n">4.9★</div><div class="mstat-l">avg. satisfaction</div></div><div class="mstat"><div class="mstat-n">2.8×</div><div class="mstat-l">avg. ROAS lift</div></div></div><div class="mkt-lead" style="margin-top:16px"><div class="t-av">LM</div><div><div style="font-size:14px;font-weight:500;color:var(--text)">Layla Mansouri</div><div style="font-size:12px;color:var(--text3)">GCC Lead · Dubai</div></div></div></div>
+  </div>
+  <div class="mkt-detail" id="mktp-australia">
+    <div><span class="tag tag-gold" style="display:inline-block;margin-bottom:18px">Australia</span><h2 class="d-lg" style="margin-bottom:18px">Australia's premium market demands premium thinking.</h2><p class="body-md" style="margin-bottom:16px">Australia has one of the highest digital advertising spends per capita in the world — and a consumer base that rewards brands who earn trust before asking for a sale. It's a trust-first market, which is exactly where Nomads wins.</p><p class="body-md" style="margin-bottom:28px">Our Sydney and Melbourne team understands the Australian media landscape, the importance of local credibility, and the nuance of speaking to both urban and regional audiences.</p><div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px"><div class="sp-di"><div class="sp-dot"></div>Google & Meta with Australian-specific creative & ACCC compliance</div><div class="sp-di"><div class="sp-dot"></div>Australian SEO: local authority & directory strategy</div><div class="sp-di"><div class="sp-dot"></div>Retail, hospitality, professional services & D2C expertise</div><div class="sp-di"><div class="sp-dot"></div>Australian influencer & media partnerships</div></div><button class="btn btn-dark btn-arrow" onclick="go('contact')">Talk to our Australia team</button></div>
+    <div><div class="mstats"><div class="mstat"><div class="mstat-n">25+</div><div class="mstat-l">AU clients</div></div><div class="mstat"><div class="mstat-n">AUD 9M</div><div class="mstat-l">revenue driven</div></div><div class="mstat"><div class="mstat-n">4.8★</div><div class="mstat-l">avg. satisfaction</div></div><div class="mstat"><div class="mstat-n">2.9×</div><div class="mstat-l">avg. ROAS lift</div></div></div><div class="mkt-lead" style="margin-top:16px"><div class="t-av">TH</div><div><div style="font-size:14px;font-weight:500;color:var(--text)">Tom Hayes</div><div style="font-size:12px;color:var(--text3)">APAC Lead · Sydney</div></div></div></div>
+  </div>
+  <div class="mkt-detail" id="mktp-usa">
+    <div><span class="tag tag-gold" style="display:inline-block;margin-bottom:18px">USA</span><h2 class="d-lg" style="margin-bottom:18px">The world's most competitive market. We enter with proof.</h2><p class="body-md" style="margin-bottom:16px">The US market rewards specialisation. We focus on B2B SaaS and premium D2C brands who need enterprise-level thinking at growth-stage speed and cost.</p><p class="body-md" style="margin-bottom:28px">Our US team operates across EST and PST with deep experience in US consumer behaviour, CCPA compliance, and the specific dynamics of US-market SEO and B2B demand generation.</p><div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px"><div class="sp-di"><div class="sp-dot"></div>B2B SaaS: demo booking, free trial, PLG strategy</div><div class="sp-di"><div class="sp-dot"></div>D2C: Meta, Google Shopping, and retention marketing</div><div class="sp-di"><div class="sp-dot"></div>US SEO: high-authority content & link building</div><div class="sp-di"><div class="sp-dot"></div>CCPA-compliant data and analytics strategy</div></div><button class="btn btn-dark btn-arrow" onclick="go('contact')">Talk to our US team</button></div>
+    <div><div class="mstats"><div class="mstat"><div class="mstat-n">20+</div><div class="mstat-l">US clients</div></div><div class="mstat"><div class="mstat-n">$4.2M</div><div class="mstat-l">revenue driven</div></div><div class="mstat"><div class="mstat-n">4.7★</div><div class="mstat-l">avg. satisfaction</div></div><div class="mstat"><div class="mstat-n">3.4×</div><div class="mstat-l">avg. ROAS lift</div></div></div><div class="mkt-lead" style="margin-top:16px"><div class="t-av">JW</div><div><div style="font-size:14px;font-weight:500;color:var(--text)">Jessica Wang</div><div style="font-size:12px;color:var(--text3)">Head of Performance · SF</div></div></div></div>
+  </div>
+</div></section>
+<section class="cta-section"><div class="wrap" style="position:relative;z-index:1"><h2 class="d-lg">Which market are you in?</h2><p style="color:rgba(255,255,255,.45);font-size:16px;max-width:340px;margin:16px auto 40px;line-height:1.8">Tell us and we'll connect you with the right team lead.</p><div class="cta-btns"><button class="btn btn-gold btn-arrow" onclick="go('contact')">Get in touch</button></div></div></section>
+<footer class="footer"><div class="wrap"><div class="foot-bottom" style="border:none"><p class="foot-copy">© 2026 Nomads Digital.</p><div style="display:flex;gap:16px"><span class="foot-link" onclick="go('home')" style="margin:0">Home</span><span class="foot-link" onclick="go('contact')" style="margin:0">Contact</span></div></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: INSIGHTS
+     ══════════════════════════════ -->
+<div class="page" id="p-insights">
+<div class="p-hero"><div class="wrap"><div class="p-hero-inner"><span class="lbl" style="display:block;margin-bottom:14px">Insights</span><h1 class="d-xl" style="margin-bottom:18px">What we know, <em>shared openly.</em></h1><p class="body-lg">Original research, deep-dive guides, and data-backed perspectives. Not a blog of weekly opinions — a curated knowledge vault.</p></div></div></div>
+<section class="sec"><div class="wrap">
+  <div style="background:#080808;border-radius:12px;padding:56px;margin-bottom:48px;display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center" data-r>
+    <div><span class="tag tag-gold" style="display:inline-block;margin-bottom:18px">Annual Report · 2026</span><h2 style="font-family:var(--font-display);font-size:32px;font-weight:400;line-height:1.2;color:#fff;margin-bottom:16px">State of Digital Marketing: India, Dubai, Australia & USA — 2026</h2><p style="color:rgba(255,255,255,.45);font-size:14px;line-height:1.78;margin-bottom:28px">Original data from 400+ marketing leaders. What's working, what's dead, and where growth is hiding in 2026.</p><button class="btn btn-gold btn-arrow" onclick="go('contact')">Download the report</button></div>
+    <div style="text-align:center"><div style="font-family:var(--font-display);font-size:120px;font-weight:400;color:rgba(192,154,88,.14);line-height:1">26</div></div>
+  </div>
+  <div class="g3">
+    <div class="ins-card" data-r><div class="ins-img">AI</div><div class="ins-body"><div class="ins-meta"><span class="tag tag-muted">SEO</span><span style="font-size:11px;color:var(--text3)">12 min read</span></div><div class="ins-title">How AI Search is Rewriting Organic Growth Rules in 2026</div><p class="ins-exc">Google AI Overviews appear for 60%+ of queries. Here's how to be the source they cite — not the brand they bury.</p></div></div>
+    <div class="ins-card" data-r data-d="1"><div class="ins-img">AU</div><div class="ins-body"><div class="ins-meta"><span class="tag tag-muted">Australia</span><span style="font-size:11px;color:var(--text3)">8 min</span></div><div class="ins-title">Why AU Brands Underinvest in Paid Search — And the Real Cost</div><p class="ins-exc">AU brands spend 23% less on paid search than comparable UK brands. We analysed 40 accounts to find the gap in dollars.</p></div></div>
+    <div class="ins-card" data-r data-d="2"><div class="ins-img">D2C</div><div class="ins-body"><div class="ins-meta"><span class="tag tag-muted">India</span><span style="font-size:11px;color:var(--text3)">15 min</span></div><div class="ins-title">The Indian D2C Retention Problem: Why CAC Keeps Rising</div><p class="ins-exc">CAC across Indian D2C brands rose 34% in 2025. Six retention strategies that are working right now.</p></div></div>
+    <div class="ins-card" data-r><div class="ins-img">AE</div><div class="ins-body"><div class="ins-meta"><span class="tag tag-muted">Dubai</span><span style="font-size:11px;color:var(--text3)">10 min</span></div><div class="ins-title">Ramadan 2026: Data Behind What Actually Converts in the GCC</div><p class="ins-exc">Ramadan is the highest-spend season in GCC. Data from 18 campaigns on timing, creative, and platform mix.</p></div></div>
+    <div class="ins-card" data-r data-d="1"><div class="ins-img">CRO</div><div class="ins-body"><div class="ins-meta"><span class="tag tag-muted">CRO</span><span style="font-size:11px;color:var(--text3)">7 min</span></div><div class="ins-title">6 Website Elements That Kill Conversions (80 Heatmap Studies)</div><p class="ins-exc">Heatmaps on 80 client websites before and after redesigns. Six patterns that consistently destroy conversions.</p></div></div>
+    <div class="ins-card" data-r data-d="2"><div class="ins-img">US</div><div class="ins-body"><div class="ins-meta"><span class="tag tag-muted">USA</span><span style="font-size:11px;color:var(--text3)">11 min</span></div><div class="ins-title">B2B SaaS Demand Gen 2026: What $8M in Spend Taught Us</div><p class="ins-exc">Across US B2B SaaS clients we've managed $8M in demand gen. Nine things we know now we didn't two years ago.</p></div></div>
+  </div>
+  <div style="margin-top:56px;background:#080808;border-radius:12px;padding:48px;text-align:center" data-r>
+    <span class="lbl" style="display:block;margin-bottom:14px;color:rgba(192,154,88,.6)">Stay ahead</span>
+    <h3 style="font-family:var(--font-display);font-size:32px;font-weight:400;color:#fff;margin-bottom:12px">The Nomads Dispatch</h3>
+    <p style="color:rgba(255,255,255,.4);font-size:14px;margin-bottom:28px;max-width:340px;margin-left:auto;margin-right:auto;line-height:1.78">Bi-weekly. One original insight, one data point, one case study excerpt. No fluff.</p>
+    <div style="display:flex;gap:10px;max-width:380px;margin:0 auto">
+      <input type="email" placeholder="your@email.com" style="font-size:14px;font-weight:300;background:rgba(255,255,255,.07);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:3px;padding:12px 16px;width:100%;outline:none;font-family:var(--font-body)">
+      <button class="btn btn-gold" style="flex-shrink:0" onclick="alert('Subscribed! Welcome to the Nomads Dispatch.')">Subscribe</button>
+    </div>
+  </div>
+</div></section>
+<footer class="footer"><div class="wrap"><div class="foot-bottom" style="border:none"><p class="foot-copy">© 2026 Nomads Digital.</p><div style="display:flex;gap:16px"><span class="foot-link" onclick="go('home')" style="margin:0">Home</span><span class="foot-link" onclick="go('contact')" style="margin:0">Contact</span></div></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: CONTACT
+     ══════════════════════════════ -->
+<div class="page" id="p-contact">
+<div class="p-hero"><div class="wrap"><div class="p-hero-inner"><span class="lbl" style="display:block;margin-bottom:14px">Contact</span><h1 class="d-xl" style="margin-bottom:18px">Let's see if <em>we're the right fit.</em></h1><p class="body-lg">We're selective about who we work with. Tell us about your business and we'll be honest about whether we can genuinely help.</p></div></div></div>
+<section class="sec"><div class="wrap">
+  <div class="cont-grid">
+    <div>
+      <div class="ci-item"><div class="ci-lbl">Response time</div><div class="ci-val">Within 4 business hours, guaranteed</div></div>
+      <div class="ci-item"><div class="ci-lbl">India office</div><div class="ci-val">Delhi NCR, India<br><span style="font-size:12px;color:var(--text3)">IST (UTC+5:30)</span></div></div>
+      <div class="ci-item"><div class="ci-lbl">Dubai office</div><div class="ci-val">Dubai, UAE<br><span style="font-size:12px;color:var(--text3)">GST (UTC+4)</span></div></div>
+      <div class="ci-item"><div class="ci-lbl">Australia office</div><div class="ci-val">Sydney & Melbourne<br><span style="font-size:12px;color:var(--text3)">AEDT (UTC+11)</span></div></div>
+      <div class="ci-item"><div class="ci-lbl">USA office</div><div class="ci-val">San Francisco & New York<br><span style="font-size:12px;color:var(--text3)">PST / EST</span></div></div>
+      <div class="ci-item"><div class="ci-lbl">Email</div><div class="ci-val" style="color:var(--gold)">hello@nomadsdigital.com</div></div>
+      <div style="margin-top:28px;padding:24px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;transition:background .35s">
+        <span class="lbl" style="display:block;margin-bottom:10px">Not sure if we're right?</span>
+        <p class="body-sm" style="margin-bottom:16px">Take the free audit first. We'll tell you honestly if we can help.</p>
+        <button class="btn btn-outline" onclick="go('audit')" style="font-size:12px;padding:10px 20px">Take the free audit →</button>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h3 style="font-size:20px;font-weight:500;margin-bottom:28px;font-family:var(--font-display);color:var(--text)">Tell us about your business</h3>
+        <div id="cform" style="display:flex;flex-direction:column;gap:18px">
+          <div class="form-2c">
+            <div class="form-g"><label class="f-lbl">First name</label><input class="fi" type="text" placeholder="Arjun"></div>
+            <div class="form-g"><label class="f-lbl">Last name</label><input class="fi" type="text" placeholder="Kapoor"></div>
+          </div>
+          <div class="form-g"><label class="f-lbl">Email</label><input class="fi" type="email" placeholder="arjun@company.com"></div>
+          <div class="form-g"><label class="f-lbl">Company</label><input class="fi" type="text" placeholder="Your company name"></div>
+          <div class="form-g"><label class="f-lbl">Your market</label><select class="fs"><option value="">Select your primary market</option><option>India</option><option>Dubai / GCC</option><option>Australia</option><option>USA</option><option>Multiple markets</option></select></div>
+          <div class="form-g"><label class="f-lbl">Monthly marketing budget</label><select class="fs"><option value="">Select a range</option><option>Under ₹1L / AED 5K / AUD 8K / $5K</option><option>₹1–5L / AED 5–25K / AUD 8–40K / $5–25K</option><option>₹5–20L / AED 25K–100K / AUD 40–160K / $25–100K</option><option>₹20L+ / AED 100K+ / AUD 160K+ / $100K+</option></select></div>
+          <div class="form-g"><label class="f-lbl">Biggest challenge right now</label><select class="fs"><option value="">Select your biggest challenge</option><option>Low conversion rates on paid ads</option><option>Can't be found organically</option><option>Brand not differentiated</option><option>Content not working</option><option>Website not converting</option><option>Don't know what's wrong</option></select></div>
+          <div class="form-g"><label class="f-lbl">Anything else?</label><textarea class="ft" placeholder="Tell us about your business, goals, or the problem you're trying to solve..."></textarea></div>
+          <button class="btn btn-dark" style="width:100%;justify-content:center" onclick="submitForm()">Send message →</button>
+          <p style="font-size:12px;color:var(--text3);text-align:center">We respond within 4 business hours · No obligation</p>
+        </div>
+        <div id="cthanks" style="display:none;text-align:center;padding:48px 0">
+          <div style="font-size:40px;margin-bottom:16px;color:var(--gold)">✓</div>
+          <h3 class="d-sm" style="margin-bottom:10px">Message received.</h3>
+          <p class="body-md">Your account lead will be in touch within 4 business hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<footer class="footer"><div class="wrap"><div class="foot-bottom" style="border:none"><p class="foot-copy">© 2026 Nomads Digital.</p></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: FREE AUDIT
+     ══════════════════════════════ -->
+<div class="page" id="p-audit">
+<section style="min-height:calc(100vh - 62px);display:flex;align-items:center;padding:60px 0">
+  <div class="wrap" style="max-width:680px;margin:0 auto;width:100%">
+    <div id="a-0">
+      <span class="lbl" style="display:block;margin-bottom:18px">Free marketing audit</span>
+      <h1 class="d-xl" style="margin-bottom:18px">Find out exactly where your marketing is stuck.</h1>
+      <p class="body-lg" style="margin-bottom:36px">5 questions. Under 3 minutes. Personalised score and 3 actionable recommendations — instantly. No email required to see your results.</p>
+      <button class="btn btn-gold btn-arrow" onclick="as(1)">Start the audit</button>
+    </div>
+    <div id="a-1" style="display:none"><div class="aud-prog"><div class="aud-fill" id="af-1" style="width:20%"></div></div><span class="lbl" style="display:block;margin-bottom:18px">Question 1 of 5</span><p class="aud-q">What is your biggest marketing challenge right now?</p><div class="aud-opts"><button class="aopt" onclick="ap(this,2)">Getting more traffic to our website</button><button class="aopt" onclick="ap(this,2)">Converting traffic into paying customers</button><button class="aopt" onclick="ap(this,2)">Our ads aren't returning a profit</button><button class="aopt" onclick="ap(this,2)">We don't know what's actually working</button></div></div>
+    <div id="a-2" style="display:none"><div class="aud-prog"><div class="aud-fill" style="width:40%"></div></div><span class="lbl" style="display:block;margin-bottom:18px">Question 2 of 5</span><p class="aud-q">How would you describe your current reporting?</p><div class="aud-opts"><button class="aopt" onclick="ap(this,3)">Reports full of numbers with no revenue connection</button><button class="aopt" onclick="ap(this,3)">We have good data and understand it well</button><button class="aopt" onclick="ap(this,3)">We barely track anything at all</button><button class="aopt" onclick="ap(this,3)">We track but never act on the data</button></div></div>
+    <div id="a-3" style="display:none"><div class="aud-prog"><div class="aud-fill" style="width:60%"></div></div><span class="lbl" style="display:block;margin-bottom:18px">Question 3 of 5</span><p class="aud-q">Which market are you primarily targeting?</p><div class="aud-opts"><button class="aopt" onclick="ap(this,4)">India</button><button class="aopt" onclick="ap(this,4)">Dubai / GCC</button><button class="aopt" onclick="ap(this,4)">Australia</button><button class="aopt" onclick="ap(this,4)">USA or multiple markets</button></div></div>
+    <div id="a-4" style="display:none"><div class="aud-prog"><div class="aud-fill" style="width:80%"></div></div><span class="lbl" style="display:block;margin-bottom:18px">Question 4 of 5</span><p class="aud-q">What is your monthly marketing budget?</p><div class="aud-opts"><button class="aopt" onclick="ap(this,5)">Under ₹1L / AED 5K / AUD 8K</button><button class="aopt" onclick="ap(this,5)">₹1–5L / AED 5–25K / AUD 8–40K</button><button class="aopt" onclick="ap(this,5)">₹5–20L / AED 25K–100K / AUD 40–160K</button><button class="aopt" onclick="ap(this,5)">₹20L+ / AED 100K+ / AUD 160K+</button></div></div>
+    <div id="a-5" style="display:none"><div class="aud-prog"><div class="aud-fill" style="width:100%"></div></div><span class="lbl" style="display:block;margin-bottom:18px">Question 5 of 5</span><p class="aud-q">How satisfied are you with your current agency or marketing setup?</p><div class="aud-opts"><button class="aopt" onclick="ar()">Very unsatisfied — this is why I'm here</button><button class="aopt" onclick="ar()">Somewhat unsatisfied — could be better</button><button class="aopt" onclick="ar()">Neutral — looking to compare options</button><button class="aopt" onclick="ar()">We don't have an agency yet</button></div></div>
+    <div id="a-r" style="display:none">
+      <div class="score-ring-n">75</div>
+      <div class="score-ring-l">/ 100 — your marketing health score</div>
+      <p class="body-md" style="margin-bottom:28px">Good foundations — but there are 3 high-leverage opportunities we spotted immediately based on your answers.</p>
+      <div class="rec-item"><div class="rec-n">1</div><div><h4 style="font-size:14px;font-weight:500;margin-bottom:6px;color:var(--text)">Revenue attribution gap</h4><p class="body-sm">Your reporting describes activity but doesn't connect to revenue. Fixing this typically reveals 20–40% of budget that can be reallocated to higher-return channels.</p></div></div>
+      <div class="rec-item"><div class="rec-n">2</div><div><h4 style="font-size:14px;font-weight:500;margin-bottom:6px;color:var(--text)">Conversion rate opportunity</h4><p class="body-sm">Based on your budget range, a 0.5% improvement in conversion rate is worth more than doubling your ad spend. This should be your first priority.</p></div></div>
+      <div class="rec-item"><div class="rec-n">3</div><div><h4 style="font-size:14px;font-weight:500;margin-bottom:6px;color:var(--text)">Market expansion potential</h4><p class="body-sm">An adjacent market expansion could add 35–60% revenue without proportional cost increase — if done with the right localisation strategy for your chosen market.</p></div></div>
+      <div style="background:#080808;border-radius:10px;padding:36px;text-align:center;margin-top:24px">
+        <h3 style="font-family:var(--font-display);font-size:28px;font-weight:400;color:#fff;margin-bottom:10px">Want the full analysis?</h3>
+        <p style="color:rgba(255,255,255,.45);font-size:14px;margin-bottom:24px;line-height:1.78">Book a 30-minute strategy call — we'll walk through your specific situation in detail. No charge, no pressure.</p>
+        <button class="btn btn-gold btn-arrow" onclick="go('contact')">Book the strategy call</button>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: CALCULATOR
+     ══════════════════════════════ -->
+<div class="page" id="p-calc">
+<section style="padding:80px 0;min-height:calc(100vh - 62px)">
+  <div class="wrap" style="max-width:700px;margin:0 auto">
+    <span class="lbl" style="display:block;margin-bottom:14px">ROI Calculator</span>
+    <h1 class="d-xl" style="margin-bottom:14px">See what better<br>marketing <em>returns.</em></h1>
+    <p class="body-lg" style="margin-bottom:48px">Adjust the inputs. Results update in real time. No email required to see your numbers.</p>
+    <div class="card" style="margin-bottom:20px">
+      <div style="margin-bottom:28px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <label style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)">Monthly ad spend</label>
+          <span id="sv" style="font-size:16px;font-weight:500;font-family:var(--font-display);color:var(--text)">₹5L</span>
+        </div>
+        <input type="range" id="csp" min="50000" max="5000000" step="50000" value="500000" oninput="cu()">
+        <div style="display:flex;justify-content:space-between;margin-top:8px"><span class="body-sm">₹50K</span><span class="body-sm">₹50L</span></div>
+      </div>
+      <div style="margin-bottom:28px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <label style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)">Current ROAS</label>
+          <span id="rv" style="font-size:16px;font-weight:500;font-family:var(--font-display);color:var(--text)">1.5×</span>
+        </div>
+        <input type="range" id="cro" min="0.5" max="5" step="0.1" value="1.5" oninput="cu()">
+        <div style="display:flex;justify-content:space-between;margin-top:8px"><span class="body-sm">0.5×</span><span class="body-sm">5×</span></div>
+      </div>
+      <div class="form-g">
+        <label style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;display:block">Industry</label>
+        <select class="fs" id="ci" onchange="cu()"><option value="1.4">E-commerce / D2C</option><option value="1.6">B2B SaaS</option><option value="1.3">Real Estate</option><option value="1.5">Retail</option><option value="1.2">Hospitality</option><option value="1.5">Fintech</option></select>
+      </div>
+    </div>
+    <div class="calc-out">
+      <p style="font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(192,154,88,.6);margin-bottom:24px">Projected improvement with Nomads</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:28px;position:relative;z-index:1">
+        <div><div style="font-size:12px;color:rgba(255,255,255,.38);margin-bottom:10px">Your current revenue</div><div style="font-family:var(--font-display);font-size:40px;font-weight:400;color:rgba(255,255,255,.45);line-height:1" id="c-cur">₹7.5L</div></div>
+        <div><div style="font-size:12px;color:rgba(255,255,255,.38);margin-bottom:10px">Projected with Nomads</div><div class="calc-rn" id="c-proj" style="position:relative;z-index:1">₹10.5L</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border-radius:4px;padding:16px;margin-bottom:24px;text-align:left;position:relative;z-index:1">
+        <p style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.72">Based on our average 3.1× ROAS improvement and your industry multiplier. This represents a realistic 12-month outcome range, not a guarantee. We show you our full working on a strategy call.</p>
+      </div>
+      <button class="btn btn-gold btn-arrow" onclick="go('contact')" style="position:relative;z-index:1">Book a call to verify this</button>
+    </div>
+  </div>
+</section>
+<footer class="footer"><div class="wrap"><div class="foot-bottom" style="border:none"><p class="foot-copy">© 2026 Nomads Digital.</p><div style="display:flex;gap:16px"><span class="foot-link" onclick="go('home')" style="margin:0">Home</span></div></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════
+     JAVASCRIPT
+     ══════════════════════════════ -->
+<script>
+// — THEME —
+let isDark = false;
+function toggleTheme() {
+  isDark = !isDark;
+  document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+  document.getElementById('themeBtn').textContent = isDark ? '☽' : '☀';
+}
+
+// — NAV SCROLL —
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+// — MOBILE MENU —
+function toggleMob() {
+  const h = document.getElementById('hamburger');
+  const m = document.getElementById('mobNav');
+  h.classList.toggle('open');
+  m.classList.toggle('open');
+  document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+}
+
+// — PAGE ROUTING —
+const PAGES = ['home','work','services','about','markets','insights','contact','audit','calc'];
+function go(id) {
+  PAGES.forEach(p => {
+    document.getElementById('p-'+p)?.classList.remove('on');
+  });
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('on'));
+  const page = document.getElementById('p-'+id);
+  if (page) page.classList.add('on');
+  const lnk = document.querySelector(`.nav-link[data-p="${id}"]`);
+  if (lnk) lnk.classList.add('on');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  document.body.style.overflow = '';
+  setTimeout(reveal, 80);
+  if (id === 'calc') cu();
+  if (id === 'audit') {
+    // Reset audit
+    ['0','1','2','3','4','5','r'].forEach(n => {
+      const el = document.getElementById('a-'+n);
+      if(el) el.style.display = 'none';
+    });
+    document.getElementById('a-0').style.display = 'block';
+  }
+}
+document.querySelectorAll('.nav-link').forEach((btn, i) => {
+  const ps = ['work','services','about','markets','insights'];
+  if(ps[i]) btn.dataset.p = ps[i];
+});
+
+// — MARKET TABS (home) —
+function mkt(id, btn) {
+  ['india','dubai','australia','usa'].forEach(m => document.getElementById('mp-'+m)?.classList.remove('on'));
+  document.querySelectorAll('.mtab').forEach(t => t.classList.remove('on'));
+  document.getElementById('mp-'+id)?.classList.add('on');
+  btn.classList.add('on');
+}
+
+// — MARKET DETAIL (markets page) —
+function mktd(id) {
+  ['india','dubai','australia','usa'].forEach(m => {
+    document.getElementById('mhc-'+m)?.classList.remove('on');
+    const p = document.getElementById('mktp-'+m);
+    if (p) p.classList.remove('on');
+  });
+  document.getElementById('mhc-'+id)?.classList.add('on');
+  document.getElementById('mktp-'+id)?.classList.add('on');
+}
+
+// — WORK FILTER —
+function fw(tag, btn) {
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.case-card').forEach(c => {
+    const t = c.dataset.tags || '';
+    c.style.display = (tag === 'all' || t.includes(tag)) ? 'block' : 'none';
+  });
+}
+
+// — SCROLL REVEAL —
+function reveal() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const d = +(e.target.dataset.d || 0);
+        setTimeout(() => e.target.classList.add('in'), d * 110);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('[data-r]:not(.in)').forEach(el => io.observe(el));
+}
+
+// — COUNT UP —
+function countUp() {
+  document.querySelectorAll('[data-cnt]').forEach(el => {
+    const target = +el.dataset.cnt;
+    const sfxEl = el.nextElementSibling;
+    const sfx = sfxEl?.dataset?.sfx || '';
+    const io = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        let v = 0;
+        const step = Math.ceil(target / 52);
+        const t = setInterval(() => {
+          v = Math.min(v + step, target);
+          el.textContent = v + sfx;
+          if (v >= target) clearInterval(t);
+        }, 18);
+        io.unobserve(el);
+      }
+    });
+    io.observe(el);
+  });
+}
+
+// — AUDIT —
+function as(n) { showA(n) }
+function ap(btn, next) {
+  btn.closest('.aud-opts')?.querySelectorAll('.aopt').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  setTimeout(() => showA(next), 300);
+}
+function ar() { showA('r') }
+function showA(n) {
+  ['0','1','2','3','4','5','r'].forEach(i => {
+    const el = document.getElementById('a-'+i);
+    if(el) el.style.display = 'none';
+  });
+  const t = document.getElementById('a-'+n);
+  if(t) t.style.display = 'block';
+}
+
+// — CALCULATOR —
+function cu() {
+  const sp = +document.getElementById('csp').value;
+  const ro = +document.getElementById('cro').value;
+  const mult = +document.getElementById('ci').value;
+  document.getElementById('sv').textContent = fmt(sp);
+  document.getElementById('rv').textContent = ro.toFixed(1) + '×';
+  document.getElementById('c-cur').textContent = fmt(sp * ro);
+  document.getElementById('c-proj').textContent = fmt(sp * Math.min(ro * mult, 9));
+}
+function fmt(n) {
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(1) + 'Cr';
+  if (n >= 100000) return '₹' + (n/100000).toFixed(1) + 'L';
+  return '₹' + Math.round(n).toLocaleString('en-IN');
+}
+
+// — CONTACT FORM —
+function submitForm() {
+  document.getElementById('cform').style.display = 'none';
+  document.getElementById('cthanks').style.display = 'block';
+}
+
+// — INIT —
+window.addEventListener('DOMContentLoaded', () => {
+  reveal();
+  countUp();
+  cu();
+});
+setTimeout(() => { reveal(); }, 200);
+</script>
+</body>
+</html>
